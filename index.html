@@ -30,6 +30,10 @@
   --gap: clamp(12px, 1.6vw, 24px);
   --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 48px; --s6: 64px; --s7: 96px; --s8: 128px;
   --section: clamp(96px, 10vw, 160px);
+  /* jerarquía de titulares: la cabecera de sección manda; nada en Bebas Regular dentro de la sección la supera */
+  --h1: clamp(48px, 5.6vw, 96px);     /* cabecera de sección */
+  --h2: clamp(40px, 3.8vw, 64px);     /* titular de contenido: sede, bloque destacado, botón de sede */
+  --h3: clamp(32px, 2.8vw, 48px);     /* título de elemento: paso, parada, medida, tarjeta */
   --chip: 52px;
   --out: cubic-bezier(.33, 1, .68, 1);      /* out(3) */
   --spring: cubic-bezier(.33, 1, .68, 1);   /* se sustituye por un muelle sin rebote (amortiguación crítica, 480 ms percibidos) donde linear() existe */
@@ -167,16 +171,15 @@ h1, h2, h3, p, dl, dd, ol, ul, figure { margin: 0; }
 .manifesto strong { font-weight: 500; color: inherit; }
 .stats { margin-top: var(--s8); row-gap: var(--s5); }
 .stat { grid-column: span 3; border-top: 1px solid var(--rule-inv); padding-top: var(--s2); display: grid; gap: var(--s1); }
-.stat b { font-family: var(--display); font-weight: 100; font-size: clamp(80px, 8vw, 132px); line-height: .8; font-variant-numeric: tabular-nums; }
+.stat b { font-family: var(--display); font-weight: 100; font-size: clamp(72px, 6vw, 104px); line-height: .8; font-variant-numeric: tabular-nums; }
 
 /* ---------- Estructura: tarjetas sobre el filete central ---------- */
 .process { padding-bottom: var(--s8); overflow-x: clip; }
 .process .cols { margin-top: var(--s2); min-height: 100%; }
-.process .body-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: var(--s6); }
-.proc-head { grid-column: 1 / -1; grid-row: 1; }
-.proc-aside { grid-column: 1; grid-row: 2; align-self: start; padding: var(--s6) var(--s4) 0 0; }
+.process .body-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 0; }   /* el titular de sección ya abre el bloque */
+.proc-aside { grid-column: 1; grid-row: 1; align-self: start; padding: var(--s6) var(--s4) 0 0; }
 .proc-aside .label { max-width: 24em; }
-.cards { grid-column: 2 / span 2; grid-row: 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--s6); padding-top: var(--s6); justify-items: center; align-items: start; }
+.cards { grid-column: 2 / span 2; grid-row: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--s6); padding-top: var(--s6); justify-items: center; align-items: start; }
 .card { width: min(calc(100% - var(--s5)), 420px); background: var(--white); color: var(--ink); padding: var(--s3) var(--s3) var(--s4); display: grid; gap: var(--s2); will-change: transform; position: relative; z-index: 3; }
 .card .c-top { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s2); padding-bottom: var(--s1); position: relative; }
 .card .c-top::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform-origin: 0 50%; transform: scaleX(var(--lx, 1)); }
@@ -217,23 +220,25 @@ h1, h2, h3, p, dl, dd, ol, ul, figure { margin: 0; }
 .j-panel { background: var(--deep); color: var(--white); border: 1px solid var(--deep); padding: var(--s3); pointer-events: auto; }   /* cajas navy sobre la escena en papel */
 .j-panel .label { color: var(--sky); }
 .j-head { grid-column: 1 / span 4; grid-row: 1; display: grid; gap: var(--s2); align-self: start; }   /* la información, siempre a la izquierda; la escena, a la derecha */
-.j-head .display { font-size: clamp(48px, 5.4vw, 92px); }
-.j-list { grid-column: 1 / span 4; grid-row: 3; align-self: start; list-style: none; margin: calc(-1 * var(--s2)) 0 0; padding: 0 var(--s3) var(--s1); border-top: 0; }   /* continúa la caja de la parada: una sola pieza, sin desplazamiento interno */
+.j-head .j-date { font-size: clamp(26px, 2.2vw, 38px); color: var(--sky); }
+.j-list { grid-column: 1 / span 4; grid-row: 3; align-self: start; list-style: none; margin: calc(-1 * var(--s2)) 0 0; padding: 0 var(--s3); border-top: 0; }   /* sin relleno inferior: la última fila, seleccionada, llega al borde de la caja */   /* continúa la caja de la parada: una sola pieza, sin desplazamiento interno */
 .j-list li:first-child { border-top: 1px solid var(--rule-inv); }
-.j-list li { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: var(--s2); align-items: baseline; padding-block: 7px; color: rgba(255, 255, 255, .62); transition: color .3s var(--io); }
+.j-list li { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: var(--s2); align-items: baseline; padding-block: 11px; margin-inline: calc(-1 * var(--s3)); padding-inline: var(--s3); color: rgba(255, 255, 255, .72); transition: color .35s var(--io), background-color .45s var(--spring); }
 .j-list li + li { border-top: 1px solid var(--rule-inv); }
-.j-list li time { font-family: var(--display); font-size: 22px; line-height: 1; letter-spacing: .03em; font-variant-numeric: tabular-nums; }
-.j-list li span { font-size: 16px; line-height: 1.35; }
-.j-list li small { font-size: 13px; color: rgba(255, 255, 255, .62); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.j-list li.is-on small { color: var(--sky); }
-.j-list li.is-on { color: var(--white); font-weight: 500; }
-.j-list li.is-on time { color: var(--sky); }
+.j-list li time { font-family: var(--display); font-size: 26px; line-height: 1; letter-spacing: .03em; font-variant-numeric: tabular-nums; }
+.j-list li span { font-size: 18px; line-height: 1.3; }
+.j-list li small { font-size: 14px; color: rgba(255, 255, 255, .62); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+/* parada activa: fila rellena de blanco, textos en azul */
+.j-list li.is-on, .j-list li.is-on + li { border-top-color: transparent; }
+.j-list li.is-on { background-color: var(--white); color: var(--deep); font-weight: 500; }
+.j-list li.is-on time { color: var(--ink, #01426a); }
+.j-list li.is-on small { color: var(--ink, #01426a); }
 /* horario navegable: relleno al pasar, sin movimiento */
-.j-list.is-nav li { cursor: pointer; margin-inline: calc(-1 * var(--s3)); padding-inline: var(--s3); transition: color .3s var(--io), background-color .45s var(--spring); }
-@media (hover: hover) { .j-list.is-nav li:hover { background-color: var(--ink); color: var(--white); } .j-list.is-nav li:hover time, .j-list.is-nav li:hover small { color: var(--sky); } }
+.j-list.is-nav li { cursor: pointer; }
+@media (hover: hover) { .j-list.is-nav li:not(.is-on):hover { background-color: rgba(145, 183, 223, .16); color: var(--white); } .j-list.is-nav li:not(.is-on):hover time, .j-list.is-nav li:not(.is-on):hover small { color: var(--sky); } }
 .j-list.is-nav li:focus-visible { outline: 1px solid var(--sky); outline-offset: -1px; }
-.j-now { --tfs: clamp(24px, 2vw, 34px); --pfs: 14px; position: relative; grid-column: 1 / span 4; grid-row: 2; align-self: start; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto minmax(0, 1fr); column-gap: var(--s3); row-gap: 8px; align-items: start; align-content: start; padding-bottom: var(--s2);
-  min-height: calc(var(--s3) + var(--s2) + var(--tfs) * 1.9 + 12px + var(--pfs) * 2.7); }   /* parada y horario forman una sola caja: hora a la izquierda, título y lugar a la derecha; alto estable */
+.j-now { --tfs: clamp(26px, 2vw, 32px); --pfs: 15px; position: relative; grid-column: 1 / span 4; grid-row: 2; align-self: start; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto minmax(0, 1fr); column-gap: var(--s3); row-gap: 6px; align-items: start; align-content: start; padding-bottom: var(--s2);
+  min-height: var(--jh, 0px); padding-bottom: var(--s3); }   /* alto = el de la parada más larga, medido (JS): ni salta entre paradas ni deja hueco */   /* parada y horario forman una sola caja: hora a la izquierda, título y lugar a la derecha; alto estable */
 .jn-top { display: contents; }
 .j-now .t { grid-column: 1; grid-row: 1 / span 2; align-self: start; }
 /* dimensiones fijas: la hora ocupa siempre el mismo ancho (cada cifra en una celda igual, los dos puntos en una estrecha),
@@ -243,10 +248,10 @@ h1, h2, h3, p, dl, dd, ol, ul, figure { margin: 0; }
 .j-now .ti, .j-now .pl { width: 100%; min-width: 0; }
 .j-now .ti .rl, .j-now .pl .rl { width: 100%; }
 .j-now .ti { grid-column: 2; grid-row: 1; align-self: start; }
-.j-now .pl { grid-column: 2 / span 2; grid-row: 2; }   /* el lugar aprovecha también el ancho bajo el icono */
-.j-now .j-ico { position: relative; grid-column: 3; grid-row: 1; align-self: start; }   /* alto fijo: hora arriba, título en dos líneas reservadas y lugar debajo; la caja nunca cambia de tamaño entre paradas */
+.j-now .pl { grid-column: 2; grid-row: 2; }   /* el lugar aprovecha también el ancho bajo el icono */
+.j-now .j-ico { position: relative; grid-column: 3; grid-row: 1 / span 2; align-self: start; }   /* el icono abarca las dos filas: la primera mide lo que el título y el lugar va justo debajo */   /* alto fijo: hora arriba, título en dos líneas reservadas y lugar debajo; la caja nunca cambia de tamaño entre paradas */
 .j-now .meta { display: grid; gap: var(--s1); min-width: 0; }
-.j-now .t { font-family: var(--display); font-weight: 100; font-size: clamp(64px, 5.6vw, 100px); line-height: .78; font-variant-numeric: tabular-nums; }
+.j-now .t { font-family: var(--display); font-weight: 100; font-size: clamp(60px, 5vw, 88px); line-height: .78; font-variant-numeric: tabular-nums; }
 .j-now .ti { font-family: var(--display); font-size: var(--tfs); line-height: .95; align-content: start; }   /* hora, título e icono comparten la línea superior; el lugar sigue al título */
 .j-now .n { color: var(--sky); }
 .j-now .pl { font-size: var(--pfs); line-height: 1.35; color: var(--sky); align-content: start; }
@@ -419,7 +424,7 @@ h1, h2, h3, p, dl, dd, ol, ul, figure { margin: 0; }
 .bgrid .stat { grid-column: auto; grid-row: 2; padding: var(--s2) var(--s3) var(--s3); display: grid; grid-template-rows: auto 1fr auto; gap: var(--s1); border-top: 0; }
 .st-top { display: flex; justify-content: space-between; align-items: center; }
 .st-top .ico { --is: 28; margin: 0; }
-.bgrid .stat b { align-self: end; font-size: clamp(88px, 9vw, 160px); }
+.bgrid .stat b { align-self: end; font-size: clamp(80px, 6.4vw, 112px); }
 .st-d { font-size: 15px; line-height: 1.4; min-height: 2.8em; color: rgba(255, 255, 255, .78); }   /* alto fijo: las cifras comparten línea base aunque la descripción ocupe dos líneas */
 .bc-ph2 { grid-column: 1 / span 2; grid-row: 3; border-left: 0; border-top: 0; }
 .bc-txt { grid-column: 1 / -1; grid-row: 3; padding: var(--s4) var(--s3); display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(var(--s3) * 2); row-gap: var(--s2); align-items: start; }   /* la segunda columna arranca alineada con el texto de la celda de la foto */
@@ -476,9 +481,9 @@ html.hide-pending .pending { display: none; }
 
 /* ---------- 04 · Logística de traslados (navy) ---------- */
 .traslados { padding-bottom: 0; --white: var(--ink); --sky: var(--signal); --deep: var(--paper); --rule-inv: var(--rule-soft); }   /* papel: la paleta navy de la sección se reasigna a tinta */
-.mad-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s3); row-gap: var(--s3); padding-top: var(--s7); }
+.mad-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s3); row-gap: var(--s3); padding-top: var(--s5); }
 .mad-head > .label { grid-column: 1 / -1; }
-.mad-head h2 { grid-column: 1 / span 6; }
+.mad-head h3 { grid-column: 1 / span 6; }
 .mad-head .mad-lead { grid-column: 8 / span 5; align-self: end; font-size: clamp(18px, 1.4vw, 22px); line-height: 1.45; }
 .tr-wrap { display: grid; grid-template-columns: minmax(0, 58fr) minmax(0, 42fr); margin-top: var(--s7); border-top: 1px solid var(--rule-inv); }
 .tr-map { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; border-right: 1px solid var(--rule-inv); background: var(--deep); }
@@ -555,7 +560,7 @@ html.hide-pending .pending { display: none; }
   .tr-stage { position: relative; }
   .tr-stage .leg { position: absolute; left: 0; right: 0; top: 0; opacity: 0; visibility: hidden; gap: var(--s2); border-top: 0; padding-top: 0; transition: none; }
   .tr-stage .leg.is-on { opacity: 1; visibility: visible; }
-  .tr-stage .leg-t { font-size: clamp(64px, 6vw, 104px); }
+  .tr-stage .leg-t { font-size: clamp(56px, 5vw, 88px); }
 }
 .leg { display: grid; gap: var(--s3); padding-top: var(--s2); border-top: 1px solid var(--rule-inv); opacity: .5; transition: opacity .6s var(--out); }
 .leg.is-on { opacity: 1; }
@@ -575,7 +580,7 @@ html.hide-pending .pending { display: none; }
 .leg-dl > div { position: relative; }
 .leg-dl dt::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 10px; vertical-align: .18em; border: 1.5px solid var(--sky); }
 .leg-dl > div:first-child dt::before { background: var(--sky); }
-.leg-t { font-family: var(--display); font-weight: 100; font-size: clamp(72px, 7vw, 120px); line-height: .8; font-variant-numeric: tabular-nums; }
+.leg-t { font-family: var(--display); font-weight: 100; font-size: clamp(64px, 6vw, 96px); line-height: .8; font-variant-numeric: tabular-nums; }
 .leg-dl > div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: var(--s2); padding-block: 10px; border-top: 1px solid var(--rule-inv); }
 .leg-dl dt { font-family: var(--display); font-size: 22px; line-height: 1.1; letter-spacing: .03em; color: var(--sky); }
 .leg-dl dd { font-size: 16px; line-height: 1.45; }
@@ -649,19 +654,19 @@ html.hide-pending .pending { display: none; }
 .seq-steps li { position: relative; }
 .seq-steps li > .ico { position: absolute; right: 0; top: var(--s2); --is: 36; }
 .seq-steps h3 { padding-right: 52px; }
-.j-ico { flex: none; display: block; width: 30px; height: 30px; color: var(--sky); }
-.j-ico .ico { position: absolute; inset: 0; width: 100%; height: 100%; --is: 30; }
+.j-ico { flex: none; display: block; width: 40px; height: 40px; color: var(--sky); }
+.j-ico .ico { position: absolute; inset: 0; width: 100%; height: 100%; --is: 40; }
 /* la columna de información cabe siempre: con poco alto se compacta y, si no basta, el horario completo se oculta (la parada activa ya lo resume) */
 @media (min-width: 861px) and (max-height: 860px) {
   .j-panel { padding: var(--s2) var(--s3); }
   .j-head { gap: 6px; }
-  .j-head .display { font-size: clamp(40px, 4.2vw, 64px); }
+  .j-head .sec-t { font-size: clamp(44px, 4.2vw, 64px); }
   .j-now .t { font-size: clamp(56px, 4.8vw, 84px); }
-  .j-now { --tfs: clamp(26px, 2.2vw, 36px); }
-  .j-list { padding-block: 4px; }
-  .j-list li { padding-block: 4px; }
-  .j-list li span { font-size: 14px; }
-  .j-list li time { font-size: 19px; }
+  .j-now { --tfs: clamp(24px, 1.9vw, 30px); }
+  .j-list { padding-block: 0; }
+  .j-list li { padding-block: 7px; }
+  .j-list li span { font-size: 16px; }
+  .j-list li time { font-size: 22px; }
 }
 @media (min-width: 861px) and (max-height: 560px) { .j-list { display: none; } }
 
@@ -669,7 +674,9 @@ html.hide-pending .pending { display: none; }
 /* ---------- 05 · Implantación: dos sedes, una plantilla ---------- */
 .impl { padding-bottom: var(--s8); --ink: var(--white); --paper: var(--deep); --rule: var(--rule-inv); --rule-soft: rgba(145, 183, 223, .2); --signal: var(--sky); }   /* navy: la paleta de papel de la sección se reasigna */
 
-.impl-tabs-wrap { position: sticky; top: 0; z-index: 20; margin-top: var(--s5); padding-top: calc(var(--chip) + var(--margin) + 12px); background: var(--paper); }
+.impl-tabs-wrap { --st: calc(var(--chip) + var(--margin) + 20px); position: sticky; top: var(--st); z-index: 20; margin-top: var(--s4); padding-top: 0; background: var(--paper); }   /* las pestañas siguen a la cabecera sin hueco; al fijarse, quedan bajo la barra flotante */
+.impl-tabs-wrap::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: var(--st); background: var(--paper); opacity: 0; pointer-events: none; }   /* al fijarse, el espacio sobre ellas se cubre para que el contenido no asome entre la barra y las pestañas */
+.impl-tabs-wrap.is-stuck::before { opacity: 1; }
 .impl-tabs { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid var(--rule); }
 .itab { appearance: none; border: 0; background: none; color: var(--ink); cursor: pointer; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: baseline; column-gap: var(--s2); padding: 12px 0 14px; text-align: left; font: inherit; opacity: .45; transition: opacity .4s var(--out); }
 .itab + .itab { padding-left: var(--s3); border-left: 1px solid var(--rule-soft); }
@@ -679,8 +686,8 @@ html.hide-pending .pending { display: none; }
 .itab .tm { font-size: 12px; font-weight: 500; letter-spacing: .06em; font-variant-numeric: tabular-nums; padding-right: var(--s2); }
 .itab-ind { position: absolute; bottom: -2px; left: 0; height: 3px; width: 0; background: var(--ink); }
 .impl-v[hidden] { display: none; }
-.iv-hero { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s3); row-gap: var(--s5); padding-top: var(--s7); }
-.iv-name { grid-column: 1 / -1; font-size: clamp(80px, 12vw, 210px); }
+.iv-hero { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s3); row-gap: var(--s4); padding-top: var(--s5); }
+.iv-name { grid-column: 1 / -1; font-size: var(--h1); }   /* el nombre de la sede, al tamaño de la cabecera de sección */
 .iv-meta { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--s3); }
 .iv-meta > div { display: grid; gap: var(--s1); align-content: start; padding-top: var(--s2); border-top: 1px solid var(--rule); }
 .iv-meta dd { font-size: clamp(16px, 1.3vw, 20px); line-height: 1.4; }
@@ -729,7 +736,7 @@ html.hide-pending .pending { display: none; }
 .seq-steps { grid-column: 8 / span 5; list-style: none; padding: 12vh 0 18vh; display: grid; gap: 22vh; }
 .seq-steps li { display: grid; gap: var(--s1); padding-top: var(--s2); border-top: 1px solid var(--rule); opacity: .42; transition: opacity .5s var(--out); }
 .seq-steps li.is-on { opacity: 1; }
-.seq-steps h3 { font-family: var(--display); font-weight: 400; font-size: clamp(40px, 4vw, 68px); line-height: .9; }
+.seq-steps h3 { font-family: var(--display); font-weight: 400; font-size: var(--h3); line-height: .9; }
 .seq-steps p { font-size: 17px; line-height: 1.5; max-width: 26em; }
 .seq-steps li::before { content: attr(data-k); font-size: 12px; font-weight: 500; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
 .rd-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s3); row-gap: var(--s3); }
@@ -771,7 +778,7 @@ html.hide-pending .pending { display: none; }
 .stop-ph { display: grid; gap: var(--s1); }
 .stop-ph .photo, .stop-pend { aspect-ratio: 16 / 10; }
 .stop-tx { display: grid; gap: var(--s2); }
-.stop-tx h3 { font-family: var(--display); font-weight: 400; font-size: clamp(40px, 3.8vw, 64px); line-height: .9; }
+.stop-tx h3 { font-family: var(--display); font-weight: 400; font-size: var(--h3); line-height: .9; }
 .stop-tx .txt { font-size: 17px; max-width: 30em; }
 .axo-view { position: relative; overflow: hidden; display: grid; place-items: center; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; border: 1px solid var(--rule-inv); background: rgba(145, 183, 223, .03); }
 .axo-view::before, .axo-view::after { content: ""; position: absolute; z-index: 2; width: 14px; height: 14px; border: 0 solid var(--sky); pointer-events: none; top: 10px; }
@@ -851,16 +858,15 @@ html.hide-pending .pending { display: none; }
 .iv-jump[data-go="madnum"]:hover i { transform: translateX(-8px); }
 .iv-jump { grid-template-columns: minmax(0, 1fr) auto !important; grid-template-rows: auto auto; row-gap: var(--s1); text-align: left; }   /* antetítulo, título debajo y flecha a la derecha, a cualquier ancho */
 .iv-jump .label { grid-column: 1; grid-row: 1; }
-.iv-jump .ij-n { grid-column: 1; grid-row: 2; font-size: clamp(44px, 6vw, 104px); line-height: .9; }
+.iv-jump .ij-n { grid-column: 1; grid-row: 2; font-size: var(--h2); line-height: .9; }
 .iv-jump i { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
 @media (max-width: 860px) { .iv-jump .ij-n { font-size: 40px; } .iv-jump { column-gap: var(--s2); padding: var(--s3) !important; } }
 .iv-jump i { font-style: normal; font-size: clamp(32px, 4vw, 64px); line-height: 1; font-weight: 300; }
 
 /* ---------- 06 · Plan operativo: el rodillo convierte riesgos en medidas ---------- */
 .ops { position: relative; }
-.ops-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s3); row-gap: var(--s3); padding-top: var(--s7); }
-.ops-head h2 { grid-column: 1 / span 7; }
-.ops-lead { grid-column: 9 / span 4; align-self: end; font-size: clamp(16px, 1.3vw, 20px); line-height: 1.5; }
+.ops-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s3); row-gap: var(--s3); padding-top: var(--s5); }
+.ops-lead { grid-column: 1 / span 7; align-self: end; font-size: clamp(16px, 1.3vw, 20px); line-height: 1.5; }
 .ops { --ground: clamp(72px, 12vh, 120px); --rr: clamp(54px, 9.5vh, 96px); --rx: 66vw; }
 .ops-pin { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
 .ops-top { position: absolute; left: 0; right: 0; top: calc(var(--chip) + var(--margin) + var(--s3)); display: flex; gap: var(--s2); align-items: baseline; z-index: 3; }
@@ -879,7 +885,7 @@ html.hide-pending .pending { display: none; }
 .op-n { font-family: var(--display); font-weight: 100; font-size: clamp(56px, 5vw, 92px); line-height: .8; transform: translateY(calc((1 - var(--e, 0)) * 60px)); }
 .op-body { grid-column: 1 / -1; align-self: start; display: grid; gap: var(--s2); margin-top: var(--s4); }   /* el texto queda por encima del recorrido del rodillo */
 .op-l { color: var(--sky); padding-top: var(--s1); border-top: 1px solid rgba(145, 183, 223, .45); opacity: var(--e2, 0); }
-.op-m { font-family: var(--display); font-weight: 400; font-size: clamp(32px, 2.8vw, 52px); line-height: .92; letter-spacing: .005em; opacity: var(--e2, 0); transform: translateY(calc((1 - var(--e2, 0)) * 56px)); }
+.op-m { font-family: var(--display); font-weight: 400; font-size: var(--h3); line-height: .92; letter-spacing: .005em; opacity: var(--e2, 0); transform: translateY(calc((1 - var(--e2, 0)) * 56px)); }
 .op-was { color: var(--sky); font-size: 12px; opacity: var(--e2, 0); }
 .op-was s { text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 55% / calc(var(--e3, 0) * 100%) 1px no-repeat; }
 .ops-roller { position: absolute; z-index: 4; left: var(--rx); bottom: var(--ground); width: calc(var(--rr) * 2.4); height: calc(var(--rr) * 2.4); margin-left: calc(var(--rr) * -1.2); margin-bottom: calc(var(--rr) * -.2); overflow: visible; }
@@ -893,7 +899,7 @@ html.hide-pending .pending { display: none; }
 .op-pend .pd-a4 figcaption { padding-inline: 10px; }
 
 @media (max-width: 860px) {
-  .mad-head h2, .mad-head .mad-lead { grid-column: 1 / -1; }
+  .mad-head h3, .mad-head .mad-lead { grid-column: 1 / -1; }
   .tr-wrap { grid-template-columns: minmax(0, 1fr); margin-top: var(--s6); }
   .tr-map { height: 52vh; height: 52svh; z-index: 5; border-right: 0; border-bottom: 1px solid var(--rule-inv); }
   .tr-map::before, .tr-map::after { top: calc(var(--chip) + 20px); width: 12px; height: 12px; }
@@ -935,14 +941,66 @@ html.hide-pending .pending { display: none; }
 
 /* ---------- 07 · Organigrama ---------- */
 .organigrama { padding-bottom: var(--s8); }
-.org { margin-top: var(--s6); aspect-ratio: 16 / 6; }
+
+/* ---------- 07 · Organigrama: dirección del proyecto arriba y cinco áreas en rejilla con cruces, sobre papel ---------- */
+.org-wrap { margin-top: var(--s5); }
+.bgrid.org-g { grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: auto auto; margin-top: var(--s3); border-color: rgba(1, 66, 106, .22); }
+.org-g .bc { border-color: rgba(1, 66, 106, .22); }
+.org-g .bx::before, .org-g .bx::after { background: var(--ink); }
+.org-top { grid-column: 1 / -1; display: grid; justify-items: center; padding: var(--s4) 0 0; }
+.org-client { display: grid; justify-items: center; gap: 10px; }
+.org-client img { display: block; height: 34px; width: auto; }
+.org-ar { display: block; fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.org-up { width: 16px; height: 40px; }
+.org-head { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s3); margin-top: 10px; }   /* la flecha ↔ cae en el eje de las líneas verticales; cada persona se arrima a ella */
+.org-head > .ogp:first-child { justify-self: end; }
+.org-head > .ogp:last-child { justify-self: start; }
+.org-lr { width: 56px; height: 16px; flex: none; }
+.ogp { display: grid; grid-template-columns: 52px minmax(0, 1fr); column-gap: 14px; align-items: center; }
+.ogp-av { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--ink); background: var(--white); color: var(--ink); font: 400 22px/1 var(--display); letter-spacing: .02em; overflow: hidden; }   /* hueco de la foto: iniciales hasta tener los retratos */
+.ogp-av img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ogp-av:has(img) { background: #cbdcee; border-color: rgba(1, 66, 106, .3); }   /* con retrato: aro fino para que los fondos claros no se fundan con el papel */
+.ogp-n { font-size: 17px; line-height: 1.25; font-weight: 600; color: var(--ink); padding-bottom: 6px; border-bottom: 1px solid var(--ink); }
+.ogp-r { margin-top: 6px; font-size: 15px; line-height: 1.35; color: rgba(1, 66, 106, .8); }
+.ogp-pm { grid-template-columns: 64px minmax(0, 1fr); min-width: 240px; }
+.ogp-pm .ogp-av { width: 64px; height: 64px; font-size: 26px; background: var(--ink); color: var(--white); }
+.ogp-pm .ogp-n { font-size: 19px; }
+.org-bus { position: relative; width: 100%; height: 72px; margin-top: var(--s3); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.ob-stem { position: absolute; left: 50%; top: 0; height: 28px; border-left: 1.5px solid var(--ink); transform-origin: 50% 0; transform: scaleY(var(--d, 1)); }
+.ob-line { position: absolute; left: 10%; right: 10%; top: 28px; border-top: 1.5px solid var(--ink); transform: scaleX(var(--d, 1)); }   /* une los centros de la primera y la última columna */
+.ob-d { position: relative; grid-row: 1; justify-self: center; width: 0; height: 100%; }
+.ob-d::before { content: ""; position: absolute; left: 0; top: 28px; bottom: 0; border-left: 1.5px solid var(--ink); transform-origin: 50% 0; transform: scaleY(var(--d, 1)); }
+.ob-d::after { content: ""; position: absolute; left: -5px; bottom: 1px; width: 9px; height: 9px; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: rotate(45deg); opacity: var(--d, 1); }
+.org-dep { display: grid; align-content: start; justify-items: start; gap: var(--s2); padding: var(--s3) var(--s3) var(--s4); }
+.org-pill { font-size: 12px; padding: 5px 12px; background: var(--ink); color: var(--white); }
+.org-dep .ogp { width: 100%; }
+.org-dep .org-ar { width: 16px; height: 24px; margin-left: 18px; }
+.org-mem { display: grid; gap: var(--s2); width: 100%; }
+@media (max-width: 1199px) {
+  .bgrid.org-g { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .org-bus { display: none; }
+  .org-top { padding-bottom: var(--s4); }
+}
+@media (max-width: 860px) {
+  .org-top { justify-items: start; padding-inline: var(--s3); }
+  .org-client { justify-items: start; }
+  .org-up { margin-left: 24px; }   /* las flechas caen sobre el centro de los retratos */
+  .org-head { display: flex; width: auto; flex-direction: column; align-items: flex-start; gap: var(--s2); }
+  .org-lr { transform: rotate(90deg); margin: 22px 0 22px 4px; }   /* girada ocupa 56 px de alto: se le da ese aire */
+}
+@media (max-width: 560px) {
+  .bgrid.org-g { grid-template-columns: minmax(0, 1fr); }
+  .org-top { padding: var(--s3) var(--s2); }
+  .ogp-pm { min-width: 0; }
+  .org-dep { padding: var(--s3) var(--s2); }
+}
 
 /* sin pendientes (?final): las secciones que solo tienen pendientes desaparecen con su enlace */
 @media (max-width: 560px) { .chip-brand { padding: 0 12px; gap: 10px; } }
 html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .pend-note, html.hide-pending .tag-pend { display: none; }
 
 @media (max-width: 860px) {
-  .identidad .kv, .org { aspect-ratio: 4 / 3; }
+  .identidad .kv { aspect-ratio: 4 / 3; }
 }
 /* selectores de pasos (tramos y paradas): botones rectangulares con la barra de avance en su borde inferior */
 @media (min-width: 861px) {
@@ -975,7 +1033,6 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 }
 @media (min-width: 861px) and (max-width: 1600px) { .tour-steps span { display: none; } .tour-steps button { grid-template-columns: auto; justify-content: center; } }   /* anchos medios: las paradas, solo con su número (el nombre ya va en la ficha) */
 /* pestañas de sede más bajas */
-.impl-tabs-wrap { padding-top: calc(var(--chip) + var(--margin) + 20px); }
 .itab { padding: 6px 0 8px; column-gap: 12px; }
 .itab b { font-size: 28px; }
 .itab .nm { font-size: clamp(20px, 1.8vw, 28px); }
@@ -1018,8 +1075,8 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 @media (max-width: 560px) { .d-l { font-size: min(72px, calc((100vw - 2 * var(--margin)) / 5.6)); } }   /* titulares: cada línea cabe entera, sin palabras huérfanas */
 @media (max-width: 860px) { .iv-block { margin-top: var(--s6); } .iv-next { margin-top: var(--s6); } .impl { padding-bottom: var(--s6); } }
 @media (max-width: 560px) { .iv-tour .iv-bh-r { display: none; } }   /* «orientativo» ya lo dice la nota del plano */
-@media (max-width: 860px) { .j-now { --tfs: 26px; padding-bottom: var(--s3); min-height: calc(var(--s3) * 2 + var(--tfs) * 1.9 + 12px + var(--pfs) * 2.7); column-gap: var(--s2); } .j-now .t { font-size: 60px; } }   /* sin horario debajo: la caja cierra con el mismo margen que abre */
-@media (max-width: 860px) and (max-height: 520px) and (orientation: landscape) { .j-head, .j-now { justify-self: start; width: 44%; } .j-head .display { font-size: 36px; } }   /* teléfono apaisado: la información a la izquierda deja ver la escena */
+@media (max-width: 860px) { .j-now { --tfs: 26px; padding-bottom: var(--s3); column-gap: var(--s2); } .j-now .t { font-size: 60px; } }   /* sin horario debajo: la caja cierra con el mismo margen que abre */
+@media (max-width: 860px) and (max-height: 520px) and (orientation: landscape) { .j-head, .j-now { justify-self: start; width: 44%; } .j-head .sec-t { font-size: 40px; } }   /* teléfono apaisado: la información a la izquierda deja ver la escena */
 @media (max-height: 520px) and (orientation: landscape) { .hero, .j-stage { min-height: 0; } .hero-ui { padding-top: calc(var(--margin) + var(--chip) + var(--s3) + env(safe-area-inset-top, 0px)); } }
 /* ---------- Acreditación digital ---------- */
 .acr-intro { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s3); row-gap: var(--s4); margin-bottom: var(--s5); }
@@ -1049,6 +1106,13 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 .acr-scroll { height: 100%; overflow-y: auto; overscroll-behavior: contain; display: grid; justify-items: center; align-content: start; gap: var(--s2); padding: calc(var(--margin) + 64px) var(--margin) var(--s6); }
 .acr-scroll img { display: block; width: min(560px, 100%); height: auto; background: #fff; }
 .acr-scroll .label { color: var(--sky); }
+/* visor a pantalla completa de cualquier foto: la imagen entera, centrada, con su pie */
+.zoomable { cursor: zoom-in; }
+.lbx-in { height: 100%; margin: 0; display: grid; justify-items: center; align-content: center; gap: var(--s2); padding: calc(var(--margin) + 64px) var(--margin) var(--s4); }   /* imagen y pie juntos, centrados */
+.lbx-in img { display: block; max-width: 100%; max-height: calc(100svh - var(--margin) - 64px - var(--s4) - 56px); width: auto; height: auto; object-fit: contain; }
+.lbx[open] .lbx-in img { animation: acrUp .6s var(--out); }
+.lbx-in figcaption { color: var(--sky); text-align: center; }
+.lbx-in figcaption:empty { display: none; }
 .acr-close { position: fixed; top: var(--margin); right: var(--margin); width: 52px; height: 52px; display: grid; place-items: center; border: 1px solid var(--rule-inv); background: var(--deep); color: #fff; cursor: pointer; transition: background .3s var(--out), color .3s var(--out); }
 .acr-close:hover, .acr-close:focus-visible { background: #fff; color: var(--deep); }
 .acr-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
@@ -1083,10 +1147,20 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 .leg-id .leg-t { font-weight: 100; }
 .leg-id .leg-b { justify-items: start; }
 .leg-id .pd-a4 { height: min(42vh, 420px); aspect-ratio: 210 / 297; width: auto; }
+/* cartel A4 y su fotomontaje, uno junto al otro y a la misma altura, enteros: cada pieza crece según su formato */
+.a4-pair { display: flex; gap: 8px; align-items: flex-start; width: min(100%, calc(min(42vh, 420px) * 1.7623 + 8px)); }
+.a4-pair figure { position: relative; margin: 0; min-width: 0; }
+.a4-pair .a4-card { flex: .668 1 0%; }
+.a4-pair .a4-mock { flex: 1.0943 1 0%; }
+.a4-pair img { display: block; width: 100%; height: auto; }
+.a4-pair .a4-card img { aspect-ratio: 1000 / 1497; }
+.a4-pair .a4-mock img { aspect-ratio: 1312 / 1199; }
+.a4-pair figcaption { position: absolute; z-index: 3; left: 0; bottom: 0; padding: 6px 10px; background: var(--deep); color: var(--sky); pointer-events: none; }
+@media (max-width: 560px) { .a4-pair figcaption { position: static; padding: 8px 0 0; background: none; } }   /* en móvil el pie va debajo para no tapar la imagen */
 .tr-legs .leg-id .pending { border-color: var(--rule-inv); color: var(--sky); background: transparent; }
 .tr-legs .leg-id .pending figcaption { background: #012c47; padding-inline: 10px; }
 .tr-legs .leg-id .pending figcaption b { color: #fff; }
-@media (max-width: 860px) { .leg.leg-id { opacity: 1; } .leg-id .pd-a4 { height: auto; width: 100%; } }
+@media (max-width: 860px) { .leg.leg-id { opacity: 1; } .leg-id .pd-a4 { height: auto; width: 100%; } .a4-pair { width: 100%; } }
 /* ---------- 07 · Visor de credenciales: miniaturas en columna a la izquierda, controles fuera de la lámina ---------- */
 .cred { --cw: 100%; margin-top: var(--s7); }   /* el visor ocupa todo el ancho del contenedor */
 .cred .iv-bh { margin-bottom: var(--s3); align-items: center; }
@@ -1136,7 +1210,7 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 .seq-3 .acr-how { grid-column: 4 / span 6; grid-row: 1; padding-top: 0; }
 .seq-3 .seq-steps { grid-column: 4 / span 6; grid-row: 2; padding: var(--s3) var(--s2) 30vh 0; gap: 16vh; }
 .seq-3:not(:has(.acr-how)) .seq-steps { grid-row: 1 / span 2; padding-top: 0; }
-.seq-3 .seq-steps h3 { font-size: clamp(36px, 3.2vw, 56px); }
+
 .seq-3 .seq-steps p { max-width: 40em; }   /* el texto aprovecha el ancho de la columna central */
 .seq-3 .seq-ref { grid-column: 10 / span 3; grid-row: 1 / span 2; margin: 0; display: grid; gap: var(--s1); align-self: start; }
 .seq-3 .seq-ref img { display: block; width: 100%; height: auto; border: 1px solid var(--rule-inv); background: #fff; }
@@ -1156,29 +1230,126 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
   .seq-3 .seq-ref.pending { width: 100%; aspect-ratio: 3 / 4; max-height: none; }
 }
 /* ---------- Renders y fotomontajes de Madnum: recorrido del asistente, de fuera adentro ---------- */
-.rd-fm .rd-ph { display: grid; gap: var(--s1); margin: 0; align-content: start; }
-.rd-fm .rd-ph .label { color: var(--sky); }
-/* mosaico: piezas de tamaños distintos que encajan sin huecos (12 columnas × 6 filas); el pie va dentro de cada imagen */
-.rd-fm { grid-auto-rows: clamp(110px, 12vw, 230px); grid-auto-flow: dense; gap: 8px; }
-.rd-fm .rd-ph { position: relative; display: block; margin: 0; min-height: 0; }
-.rd-fm .rd-ph .photo { position: absolute; inset: 0; aspect-ratio: auto !important; }
+/* filas justificadas: cada pieza crece en proporción a su formato (--ar, ancho/alto en número), así todas las de una fila comparten alto
+   y se ven enteras, sin recorte; los huecos pendientes llevan un formato provisional hasta tener la imagen */
+.rd-fm { display: grid; gap: 8px; }
+.rd-fm .fm-row { display: flex; gap: 8px; align-items: flex-start; }
+.rd-fm .fm-row > * { flex: var(--ar) 1 0%; min-width: 0; margin: 0; }
+.rd-fm .rd-ph { position: relative; display: block; }
+.rd-fm .rd-ph .photo { aspect-ratio: var(--ar); }
 .rd-fm .rd-ph figcaption { position: absolute; z-index: 3; left: 0; bottom: 0; padding: 6px 10px; background: var(--deep); color: var(--sky); pointer-events: none; }
-.rd-fm .fm-a { grid-column: 1 / span 8; grid-row: 1 / span 2; }
-.rd-fm .fm-b { grid-column: 9 / span 4; grid-row: 1 / span 3; }
-.rd-fm .fm-c { grid-column: 1 / span 4; grid-row: 3 / span 2; }
-.rd-fm .fm-d { grid-column: 5 / span 4; grid-row: 3 / span 2; }
-.rd-fm .fm-e { grid-column: 1 / span 8; grid-row: 5 / span 2; }
-.rd-fm .fm-f { grid-column: 9 / span 4; grid-row: 4 / span 3; }
-@media (max-width: 860px) {
-  .rd-fm { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 34vw; }
-  .rd-fm .fm-a, .rd-fm .fm-e { grid-column: 1 / -1; grid-row: auto / span 1; }
-  .rd-fm .fm-b, .rd-fm .fm-f { grid-column: auto / span 1; grid-row: auto / span 2; }
-  .rd-fm .fm-c, .rd-fm .fm-d { grid-column: auto / span 1; grid-row: auto / span 1; }
+.rd-fm .plan { display: block; aspect-ratio: var(--ar); background: #fff; }   /* el plano, sin trama; al pulsarlo se abre a tamaño completo */
+.rd-fm .plan img { display: block; width: 100%; height: 100%; }
+html.hide-pending .rd-fm .fm-row:not(:has(> .rd-ph)) { display: none; }
+@media (max-width: 560px) {
+  .rd-fm .fm-row { flex-direction: column; align-items: stretch; }
+  .rd-fm .fm-row > * { flex: none; }
 }
 /* ---------- Selectores de pasos: cifra y rótulo recortados a su altura de mayúscula, sobre la misma línea base y centrados en la caja ---------- */
+/* ---------- Cabecera de sección: número Bebas Thin y nombre Bebas a tamaño de titular, sobre el filete; el código, a la derecha ---------- */
+.bar.sec { align-items: baseline; padding-top: var(--s3); }   /* el código se apoya en la línea base del titular */
+.sec-t { display: flex; align-items: baseline; gap: .28em; margin: 0; font-family: var(--display); font-weight: 400; font-size: var(--h1); line-height: .9; letter-spacing: .005em; text-transform: none; color: var(--ink); }
+.inv .sec-t, .j-panel .sec-t { color: var(--white); }
+.sec-t b { font-weight: 100; color: var(--signal); }
+.inv .sec-t b, .j-panel .sec-t b { color: var(--sky); }
+.j-head .sec-t { font-size: clamp(48px, 4.6vw, 80px); }
+@media (max-width: 860px) {
+  .sec-t { font-size: clamp(44px, 12vw, 64px); }
+  .bar.sec { flex-wrap: wrap; row-gap: var(--s1); }
+  .bar.sec .bracket { display: none; }   /* en móvil, solo el nombre de la sección */
+}
+.d-c { font-size: var(--h2); }
+@media (min-width: 1101px) { .j-head, .j-list, .j-now { grid-column: 1 / span 6; width: min(100%, 650px); } }   /* columna contenida: el horario cabe en una línea por fila sin alargarse */
+.j-now-m { position: absolute; left: 0; top: 0; visibility: hidden; pointer-events: none; display: grid; row-gap: 8px; }
+.j-now-m > span { display: block; }
+/* ---------- 03 · Identidad: la misma rejilla con cruces que el briefing ----------
+   fila 1-2: key visual (9 col.) | versión vertical (3 col.) y, debajo, el texto; fila 3: cuatro celdas con icono */
+.idv-pad { padding-top: var(--s5); }
+.bgrid.idgrid { grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr) auto; margin-top: var(--s5); }   /* la versión vertical se queda con todo el alto que no ocupa el texto */
+.idg-kv { grid-column: 1 / span 9; grid-row: 1 / span 2; aspect-ratio: 16 / 9; overflow: hidden; }
+.idg-kv img, .idg-v img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.idg-kv figcaption { position: absolute; z-index: 2; left: 0; bottom: 0; padding: 6px 10px; background: var(--deep); color: var(--sky); }
+.idg-v { grid-column: 10 / span 3; grid-row: 1; overflow: hidden; }
+.idg-txt { grid-column: 10 / span 3; grid-row: 2; padding: var(--s3); display: grid; align-content: end; }
+.idg-txt p { font-size: clamp(17px, 1.3vw, 21px); line-height: 1.45; color: #fff; }
+.idc { grid-column: span 3; grid-row: 3 / span 3; display: grid; grid-template-rows: subgrid; row-gap: var(--s2); padding: var(--s3); color: #fff; }   /* subrejilla: títulos, iconos y textos alineados entre celdas */
+.idc .c-top { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s2); padding-bottom: var(--s1); border-bottom: 1px solid var(--rule-inv); }
+.idc .title { font-family: var(--display); font-weight: 400; font-size: var(--h3); line-height: .92; letter-spacing: .005em; }
+.idc .n { font-family: var(--display); font-weight: 100; font-size: 40px; line-height: .8; color: var(--sky); }
+.idc .p-icon { width: min(100%, 170px); aspect-ratio: 10 / 7; margin-block: var(--s2); color: var(--sky); }
+.idc .p-icon svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.idc .p-icon svg * { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.idc .txt { font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, .86); align-self: start; }
+@media (max-width: 1100px) and (min-width: 861px) { .bgrid.idgrid { grid-template-rows: auto auto; } .idg-kv { grid-column: 1 / -1; grid-row: 1; } .idg-v { grid-column: 1 / span 4; grid-row: 2; aspect-ratio: 4 / 5; } .idg-txt { grid-column: 5 / span 8; grid-row: 2; } .idc { grid-column: span 6; grid-row: auto / span 3; } }
+@media (max-width: 860px) {
+  .bgrid.idgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; }
+  .idg-kv { grid-column: 1 / -1; grid-row: auto; }
+  .idg-v { grid-column: 1; grid-row: auto; aspect-ratio: 4 / 5; }
+  .idg-txt { grid-column: 2; grid-row: auto; padding: var(--s2); }
+  .idg-txt p { font-size: 16px; }
+  .idc { grid-column: 1 / -1; grid-row: auto; grid-template-rows: none; padding: var(--s3) var(--s2); }
+}
+@media (max-width: 480px) { .idg-v, .idg-txt { grid-column: 1 / -1; } .idg-v { aspect-ratio: 4 / 3; } }
+/* traslados: el tramo activo, relleno de blanco con cifra y rótulo en azul (como la parada activa de la agenda) */
+@media (min-width: 861px) {
+  .tr-steps button.is-on, .tour-steps button.is-on { background: #fff; border-color: #fff; color: #012c47; }
+  .tr-steps button.is-on b, .tr-steps button.is-on span, .tour-steps button.is-on b, .tour-steps button.is-on span { color: #012c47; }
+  .tr-steps button.is-on .ts-bar > i, .tour-steps button.is-on .ts-bar > i { background: #597cbe; }   /* el avance sigue visible sobre el blanco, sin parecer un corte */
+}
+/* ---------- Acreditación (Madnum): rejilla con cruces; a la izquierda se recorre descripción y dos tiempos, a la derecha la imagen fija ---------- */
+.bgrid.acg { --pw: min(36vw, calc((100svh - var(--tabs-h, 150px) - 140px) * 1200 / 1579)); grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto auto; margin-top: var(--s3); }   /* la columna derecha mide lo que el móvil */
+.acg-lead { grid-column: 1; grid-row: 1; padding: var(--s4) var(--s3) var(--s5); display: grid; gap: var(--s3); align-content: start; }
+.acg-lead .acr-lead { grid-column: auto; font-size: clamp(24px, 2.2vw, 34px); line-height: 1.22; letter-spacing: -.015em; }   /* sin columnas implícitas: el rótulo no se estrecha */
+.acg-ph { grid-column: 2; grid-row: 1 / span 3; margin: 0; padding: var(--s3); }
+.acg-stick { width: var(--pw); position: sticky; top: calc(var(--tabs-h, 150px) + var(--s3)); display: grid; gap: var(--s1); }   /* la imagen se queda fija mientras se recorre la columna izquierda */
+.acg-zoom { aspect-ratio: 1200 / 1579; width: var(--pw); overflow: hidden; border: 1px solid var(--rule-inv); }   /* el móvil entero, sin recorte, cabe bajo las pestañas */
+.acg-zoom img { width: 100%; height: 100%; object-fit: contain; border: 0 !important; }
+.acg-stick figcaption { color: var(--sky); }
+.acg-step { grid-column: 1; display: grid; grid-template-columns: 56px minmax(0, 1fr) minmax(140px, 200px); column-gap: var(--s3); padding: var(--s4) var(--s3) var(--s5); }
+.acg-step[data-k="0"] { grid-row: 2; } .acg-step[data-k="1"] { grid-row: 3; } .acg-step[data-k="2"] { grid-row: 4; } .acg-step[data-k="3"] { grid-row: 5; }
+/* Real Fábrica: cuatro pasos y, a la derecha, el hueco horizontal de la pantalla de seating */
+.bgrid.acg-rft { --pw: min(36vw, 520px); }
+.acg-rft .acg-ph { grid-row: 1 / span 5; }
+.acg-stick > .pending { aspect-ratio: 16 / 9; }
+.acg-shot { width: var(--pw); aspect-ratio: 1448 / 1086; overflow: hidden; border: 1px solid var(--rule-inv); }
+.acg-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.acg-rft .acg-stick > figcaption { color: var(--sky); }
+.acg-li { list-style: none; padding: 0; margin: 1.1em 0 0; display: grid; gap: .5em; }
+.acg-li li { position: relative; padding-left: 22px; font-size: 17px; line-height: 1.5; color: rgba(255, 255, 255, .88); max-width: 34em; }
+.acg-li li::before { content: ""; position: absolute; left: 0; top: .72em; width: 10px; border-top: 2px solid var(--sky); }
+.acg-li + p { margin-top: 1.1em; }
+html.hide-pending .acg-ph:has(> .acg-stick > .pending) { display: none; }
+html.hide-pending .bgrid.acg:has(.acg-ph > .acg-stick > .pending) { grid-template-columns: minmax(0, 1fr); }
+.rd-fm .fm-row > .pending { aspect-ratio: var(--ar); }
+html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
+.acg-mk { position: relative; display: grid; justify-items: center; align-content: start; }
+.acg-n { position: relative; z-index: 1; width: 56px; height: 56px; display: grid; place-items: center; border: 1px solid var(--sky); background: var(--deep); color: var(--sky); font: 400 30px/1 var(--display); transition: background .45s var(--out), color .45s var(--out), border-color .45s var(--out); }
+.acg-step.is-on .acg-n { background: #fff; border-color: #fff; color: #012c47; }   /* tiempo activo: relleno blanco, cifra en azul */
+.acg-ln { position: absolute; top: 56px; left: 50%; bottom: calc(-1 * var(--s5) - var(--s4) - 1px); width: 0; border-left: 2px solid #fff; transform-origin: 50% 0; transform: scaleY(var(--p, 0)); }   /* el trazo une el tiempo 01 con el 02 */
+.acg-body { display: grid; gap: var(--s2); align-content: start; }
+.acg-body > .label { color: var(--sky); padding-top: 4px; }
+.acg-hd { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--s2); }
+.acg-hd .display { font-size: var(--h3); line-height: .92; }
+.acg-hd .ico { --is: 36; flex: none; width: 36px; height: 36px; color: var(--sky); }
+.acg-tx p { font-size: 17px; line-height: 1.5; color: rgba(255, 255, 255, .88); max-width: 34em; }
+.acg-tx p + p { margin-top: 1.1em; }
+.acg-art { align-self: start; aspect-ratio: 1; color: var(--sky); }
+.acg-art svg { width: 100%; height: 100%; overflow: visible; }
+.acg-art svg * { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.acg-art .scan { stroke: #fff; stroke-width: 3; }
+@media (max-width: 1100px) and (min-width: 861px) { .acg-step { grid-template-columns: 56px minmax(0, 1fr); } .acg-art { display: none; } }
+@media (max-width: 860px) {
+  .bgrid.acg { --pw: 100%; grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .acg-lead, .acg-ph, .acg-step { grid-column: 1; grid-row: auto !important; }
+  .acg-stick { position: static; }
+  .acg-step { grid-template-columns: 44px minmax(0, 1fr); column-gap: var(--s2); padding: var(--s3) var(--s2) var(--s4); }
+  .acg-n { width: 44px; height: 44px; font-size: 24px; } .acg-ln { top: 44px; bottom: calc(-1 * var(--s4) - var(--s3) - 1px); }
+  .acg-art { display: none; }
+  .acg-lead { padding: var(--s3) var(--s2) var(--s4); }
+  .acg-ph { padding: var(--s2); }
+}
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
 </style>
-
 </head>
 <body>
 
@@ -1240,9 +1411,9 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 
   <!-- ============ 01 · BRIEFING ============ -->
   <section class="concept briefing inv" id="briefing" data-nav="briefing">
-    <div class="bar container label"><span>01 · Briefing</span><span class="bracket">LM26.1</span></div>
+    <div class="bar sec container"><h2 class="sec-t"><b>01</b><span>Briefing</span></h2><span class="bracket label">LM26.1</span></div>
     <div class="container">
-      <div class="bgrid">
+      <div class="bgrid" data-xgrid>
         <div class="bc bc-lead"><p class="manifesto" id="manifesto">La Leadership Meeting 2026 reunirá en Madrid a aproximadamente 260 directivos de Gestamp procedentes de 24 países.</p></div>
         <figure class="bc bc-ph"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/lm25-publico.webp" width="800" height="545" decoding="async" loading="lazy" alt="Directivos de Gestamp en el auditorio de Madnum durante el Leadership Meeting 2025"></div></figure>
         <div class="bc stat"><div class="st-top"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 10a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M4 27v-3a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v3"/><path d="M20 6.5a3.5 3.5 0 0 1 0 7"/><path d="M23 18a5 5 0 0 1 5 5v4"/></svg></i><span class="label">Asistentes</span></div><b class="count" data-to="260">260</b><span class="st-d">Directivos de Gestamp</span></div>
@@ -1260,7 +1431,7 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
     <div class="j-stage" id="jStage">
       <canvas class="j-canvas" id="jCanvas" aria-hidden="true"></canvas>
       <div class="j-ui"><div class="container">
-        <div class="j-head j-panel"><p class="label">02 · Agenda</p><h2 class="display">22 de diciembre</h2></div>
+        <div class="j-head j-panel"><h2 class="sec-t sec-sm"><b>02</b><span>Agenda</span></h2><p class="display j-date">22 de diciembre</p></div>
         <ol class="j-list j-panel" id="jList">
           <li data-t="07:45" data-title="Salida del hotel" data-place="Only YOU Atocha → Madnum"><time>07:45</time><span>Salida de Only YOU Atocha</span></li>
           <li data-t="08:15" data-title="Registro y welcome coffee" data-place="Madnum"><time>08:15</time><span>Registro y welcome coffee</span><small>hasta 08:50</small></li>
@@ -1281,53 +1452,22 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 
   <!-- ============ 03 · IDENTIDAD VISUAL ============ -->
   <section class="process identidad inv" id="identidad" data-nav="identidad">
-    <div class="bar container label"><span>03 · Identidad visual</span><span class="bracket">LM26.3</span></div>
-    <div class="cols container">
-      <i class="rule-v" style="left:calc(var(--margin) + (100% - 2 * var(--margin)) / 3)"></i>
-      <i class="rule-v" style="left:calc(var(--margin) + (100% - 2 * var(--margin)) * 2 / 3)"></i>
-      <div class="body-grid">
-        <div class="proc-head">
-          <h2 class="display d-l"><span class="ln"><span><span class="fill">Identidad</span></span></span><span class="ln"><span><span class="fill">visual</span></span></span></h2>
-        </div>
-        <div class="proc-aside"><p class="txt"><span class="fill">Una línea gráfica coherente con la identidad Gestamp y adaptada a todos los puntos de contacto. Key visual simple, con el logo y el nombre del evento.</span></p></div>
-        <div class="cards">
-          <article class="card" data-rot="-3">
-            <div class="c-top"><h3 class="title">Acreditación y lanyard</h3><span class="n">01</span></div>
-            <div class="p-icon"><svg viewBox="0 0 200 140" aria-hidden="true"><path d="M78 6 L92 38 M122 6 L108 38"/><rect x="86" y="38" width="28" height="10"/><rect x="62" y="48" width="76" height="88"/><rect x="72" y="62" width="22" height="26"/><path d="M102 66 H128 M102 76 H122 M72 104 H128 M72 114 H112"/></svg></div>
-            <p class="txt">Lanyard impreso in situ en el registro, con el QR de cada asistente.</p>
-            <div class="c-end"></div>
-          </article>
-          <article class="card" data-rot="2.5">
-            <div class="c-top"><h3 class="title">Señalética</h3><span class="n">02</span></div>
-            <div class="p-icon"><svg viewBox="0 0 200 140" aria-hidden="true"><path d="M100 136 V10"/><path d="M100 22 H158 L172 36 L158 50 H100"/><path d="M100 62 H42 L28 76 L42 90 H100"/><path d="M80 136 H120"/></svg></div>
-            <p class="txt">Boreal: acceso al auditorio y zonas comunes. Real Fábrica de Tapices: recorrido hasta el almuerzo.</p>
-            <div class="c-end"></div>
-          </article>
-          <article class="card" data-rot="2">
-            <div class="c-top"><h3 class="title">Escenario</h3><span class="n">03</span></div>
-            <div class="p-icon"><svg viewBox="0 0 200 140" aria-hidden="true"><rect x="40" y="8" width="120" height="68"/><path d="M10 104 H190 V126 H10 Z"/><path d="M34 104 L38 74 H58 L62 104"/><path d="M10 116 H190"/></svg></div>
-            <p class="txt">Pantalla, atril y frontal del auditorio de Madnum.</p>
-            <div class="c-end"></div>
-          </article>
-          <article class="card" data-rot="-2.5">
-            <div class="c-top"><h3 class="title">Pantallas de seating</h3><span class="n">04</span></div>
-            <div class="p-icon"><svg viewBox="0 0 200 140" aria-hidden="true"><rect x="40" y="10" width="120" height="84"/><path d="M54 28 H108 M54 42 H96 M54 56 H112 M54 70 H90"/><path d="M122 28 H146 M122 42 H146 M122 56 H146 M122 70 H146"/><path d="M100 94 V128 M76 128 H124"/></svg></div>
-            <p class="txt">Mapa de mesas a la entrada del almuerzo, en la Real Fábrica de Tapices.</p>
-            <div class="c-end"></div>
-          </article>
-        </div>
+    <div class="bar sec container"><h2 class="sec-t"><b>03</b><span>Identidad visual</span></h2><span class="bracket label">LM26.3</span></div>
+    <div class="container">
+      <div class="bgrid idgrid" data-xgrid>
+        <figure class="bc idg-kv"><img src="img/kv-lm26.webp" width="1920" height="1080" decoding="async" loading="lazy" alt="Key visual del Leadership Meeting 2026: Leadership Meeting 2026, 22 de diciembre de 2026, Madrid, Auditorio Complejo Madnum y Real Fábrica de Tapices, con el logotipo de Gestamp"><figcaption class="label">Key visual · Leadership Meeting 2026</figcaption></figure>
+        <figure class="bc idg-v"><img src="img/kv-lm26-v.webp" width="672" height="840" decoding="async" loading="lazy" alt="Versión vertical del key visual: LM 2026 con el logotipo de Gestamp"></figure>
+        <div class="bc idg-txt"><p>Una línea gráfica coherente con la identidad Gestamp y adaptada a todos los puntos de contacto. Key visual simple, con el logo y el nombre del evento.</p></div>
       </div>
-      <figure class="kv kv-img"><div class="kv-frame"><img src="img/kv-lm26.webp" width="1920" height="1080" decoding="async" loading="lazy" alt="Key visual del Leadership Meeting 2026: Leadership Meeting 2026, 22 de diciembre de 2026, Madrid, Auditorio Complejo Madnum y Real Fábrica de Tapices, con el logotipo de Gestamp"></div><figcaption class="label">Key visual · Leadership Meeting 2026</figcaption></figure>
     </div>
   </section>
   <div class="steps to-paper" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
   <!-- ============ 04 · LOGÍSTICA DE TRASLADOS ============ -->
   <section class="traslados" id="traslados" data-nav="traslados">
-    <div class="bar container label"><span>04 · Logística de traslados</span><span class="bracket">LM26.4</span></div>
+    <div class="bar sec container"><h2 class="sec-t"><b>04</b><span>Logística de traslados</span></h2><span class="bracket label">LM26.4</span></div>
     <div class="container mad-head">
-      <p class="label">Plan de traslados</p>
-      <h2 class="display d-l"><span class="ln"><span>Cinco autocares,</span></span><span class="ln"><span>tres tramos</span></span></h2>
+      <h3 class="display d-c"><span class="ln"><span>Cinco autocares,</span></span><span class="ln"><span>tres tramos</span></span></h3>
       <p class="mad-lead">Se ha diseñado una operativa de transporte con cinco autocares, coordinando los desplazamientos entre Only YOU Atocha, Madnum, la Real Fábrica de Tapices y el aeropuerto Adolfo Suárez Madrid-Barajas.</p>
     </div>
     <div class="tr-wrap">
@@ -1402,7 +1542,7 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
           <p class="label leg-n"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 6h22v16H5z"/><path d="M5 12h22"/><path d="M16 6v6"/><path d="M8 18h3M21 18h3"/><path d="M8 24.5a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M20 24.5a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/></svg></i>Identificación de autocares</p>
           <div class="leg-hd"><div class="leg-tk"><p class="leg-t">A4</p></div><div class="leg-r"><b>Buses identificados por destino</b></div></div>
           <div class="leg-cols"><div class="leg-a"><p class="leg-note">Cartel A4 en cada autobús con su número y destino.</p></div><div class="leg-b">
-          <figure class="pending pd-a4" aria-label="Pendiente: cartel A4 por autobús"><svg class="pd-x" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 L100 100 M100 0 L0 100" vector-effect="non-scaling-stroke"/></svg><figcaption class="label"><b>Pendiente</b><span>Cartel A4 · «BUS 1 · Aeropuerto»</span></figcaption></figure>
+          <div class="a4-pair"><figure class="a4-card"><img src="img/bus-a4.webp" width="1000" height="1497" decoding="async" loading="lazy" alt="Cartel A4 del Leadership Meeting 2026 para el autobús 1 con destino aeropuerto"><figcaption class="label">Cartel A4</figcaption></figure><figure class="a4-mock"><img src="img/bus-a4-mockup.webp" width="1312" height="1199" decoding="async" loading="lazy" alt="Fotomontaje de un autocar con el cartel A4 del Leadership Meeting 2026 tras el parabrisas"><figcaption class="label">Fotomontaje · Parabrisas</figcaption></figure></div>
           </div></div>
         </article>
         </div>
@@ -1413,7 +1553,7 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 
   <!-- ============ 05 · IMPLANTACIÓN (Madnum | Real Fábrica de Tapices) ============ -->
   <section class="impl inv" id="implantacion" data-nav="implantacion">
-    <div class="bar container label"><span>05 · Implantación de la propuesta</span><span class="bracket">LM26.5</span></div>
+    <div class="bar sec container"><h2 class="sec-t"><b>05</b><span>Implantación de la propuesta</span></h2><span class="bracket label">LM26.5</span></div>
     <div class="impl-tabs-wrap">
       <div class="container impl-tabs" role="tablist" aria-label="Sede">
         <button class="itab is-on" role="tab" aria-selected="true" data-v="madnum" type="button"><b>A</b><span class="nm">Madnum</span><span class="tm">08:15–14:00</span></button>
@@ -1425,7 +1565,7 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
     <!-- ===== Variante A · Madnum ===== -->
     <div class="impl-v is-on" data-v="madnum" role="tabpanel">
       <div class="container iv-hero">
-        <h2 class="iv-name display"><span class="ln"><span>Madnum</span></span></h2>
+        <h3 class="iv-name display"><span class="ln"><span>Madnum</span></span></h3>
         <dl class="iv-meta">
           <div><dt class="label"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 16a11 11 0 1 0 22 0a11 11 0 1 0 -22 0"/><path d="M16 9v7l5 3"/></svg></i>Horario</dt><dd>08:15–14:00</dd></div>
           <div><dt class="label"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 10a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M4 27v-3a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v3"/><path d="M20 6.5a3.5 3.5 0 0 1 0 7"/><path d="M23 18a5 5 0 0 1 5 5v4"/></svg></i>En la sede</dt><dd>Registro y welcome coffee · Ponencias · Coffee break</dd></div>
@@ -1472,35 +1612,42 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 
       <div class="container iv-block iv-arrive">
         <div class="iv-bh"><span class="label">02 · Acreditación digital y control de accesos</span></div>
-        <div class="acr-intro">
-          <p class="acr-lead">Proponemos una forma sencilla de gestionar la entrada y la información de los asistentes: todo en el móvil y sin instalar ninguna aplicación.</p>
-        </div>
-        <div class="seq seq-3" data-seq>
-          <div class="seq-art">
-            <svg viewBox="0 0 400 400" aria-hidden="true">
-              <g class="sq-s" data-s="0"><path d="M40 96 H150 V176 H40 Z"/><path d="M40 96 L95 140 L150 96"/><path d="M150 136 H196"/><path d="M186 126 L198 136 L186 146"/><rect x="210" y="50" width="130" height="270" rx="0"/><rect x="235" y="120" width="80" height="80"/><path d="M247 132 h22 v22 h-22 z M281 132 h22 v22 h-22 z M247 166 h22 v22 h-22 z M285 170 h6 v6 h-6 z M297 182 h6 v6 h-6 z"/><path d="M240 230 H310 M250 250 H300 M260 296 H290"/><path d="M40 340 H360"/></g>
-              <g class="sq-s" data-s="1"><rect x="60" y="110" width="120" height="90"/><path d="M120 200 V320 M70 320 H170"/><path d="M80 135 H160 M80 155 H140"/><path class="scan" d="M40 172 H200"/><path d="M230 120 H350 V250 H230 Z"/><path d="M230 148 H350"/><path d="M248 172 l6 6 l12 -12 M276 172 H330 M248 198 l6 6 l12 -12 M276 198 H322 M248 224 H262 M276 224 H316"/><path d="M290 250 V286 M262 286 H318"/><path d="M40 340 H360"/></g>
-            </svg>
-            <span class="seq-n label"><b class="roll" data-roll>01</b> / 02</span>
-          </div>
-          <p class="label acr-how">¿Cómo funciona?</p>
-          <ol class="seq-steps">
-            <li data-s="0"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 5h8v8H5z"/><path d="M19 5h8v8h-8z"/><path d="M5 19h8v8H5z"/><path d="M8 8h2v2H8z"/><path d="M22 8h2v2h-2z"/><path d="M8 22h2v2H8z"/><path d="M19 19h3v3h-3z"/><path d="M24 24h3v3h-3z"/><path d="M19 27h2M27 19v2"/></svg></i><h3>Invitación digital</h3><p>Cada asistente recibe su invitación digital por email.</p><p>Es un código personal que puede guardar en el móvil, en su cartera digital (Apple Wallet o Google Wallet) o descargar en PDF.</p><p>El mismo email incluye la agenda, el plano de llegada y los datos del alojamiento.</p></li>
-            <li data-s="1"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 6h16v12H8z"/><path d="M16 18v8"/><path d="M10 26h12"/><path d="M3 12h26"/></svg></i><h3>Controlamos el acceso</h3><p>El día del evento, al escanear el QR se valida la entrada.</p><p>Podemos ver a través de un panel quién ha llegado, y se evitan duplicidades y accesos no autorizados.</p><p>Este mismo sistema puede usarse para el servicio de guardarropía.</p></li>
-          </ol>
-          <figure class="seq-ref"><button class="seq-zoom" type="button" aria-haspopup="dialog" aria-controls="acrBox" aria-label="Ver la invitación a pantalla completa"><img src="img/lm26-invitacion.webp" width="600" height="1576" decoding="async" loading="lazy" alt="Email de invitación del Leadership Meeting 2026: pase en PDF y Apple Wallet, número de identificación, alojamiento en Only YOU Atocha Hotel y agenda del día"><span class="acr-x" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7"/></svg></span></button><figcaption><span class="label">Propuesta</span><span class="acr-ct">Invitación del Leadership Meeting 2026</span></figcaption></figure>
+        <div class="bgrid acg" data-xgrid>
+          <div class="bc acg-lead"><p class="label">¿Cómo funciona?</p><p class="acr-lead">Proponemos una forma sencilla de gestionar la entrada y la información de los asistentes: todo en el móvil y sin instalar ninguna aplicación.</p></div>
+          <figure class="bc acg-ph"><div class="acg-stick"><button class="seq-zoom acg-zoom" type="button" aria-haspopup="dialog" aria-controls="acrBox" aria-label="Ver la invitación a pantalla completa"><img src="img/lm26-invitacion-movil.webp" width="1200" height="1579" decoding="async" loading="lazy" alt="Mockup de la invitación del Leadership Meeting 2026 en un móvil: pase en PDF, Apple Wallet, número de identificación y alojamiento"><span class="acr-x" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7"/></svg></span></button><figcaption class="label">Propuesta · invitación del Leadership Meeting 2026</figcaption></div></figure>
+          <article class="bc acg-step" data-k="0">
+            <div class="acg-mk"><span class="acg-n">01</span><i class="acg-ln" aria-hidden="true"></i></div>
+            <div class="acg-body"><p class="label">Por email</p><div class="acg-hd"><h3 class="display">Invitación digital</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 5h8v8H5z"/><path d="M19 5h8v8h-8z"/><path d="M5 19h8v8H5z"/><path d="M8 8h2v2H8z"/><path d="M22 8h2v2h-2z"/><path d="M8 22h2v2H8z"/><path d="M19 19h3v3h-3z"/><path d="M24 24h3v3h-3z"/><path d="M19 27h2M27 19v2"/></svg></i></div><div class="acg-tx"><p>Cada asistente recibe su invitación digital por email.</p><p>Es un código personal que puede guardar en el móvil, en su cartera digital (Apple Wallet o Google Wallet) o descargar en PDF.</p><p>El mismo email incluye la agenda, el plano de llegada y los datos del alojamiento.</p></div></div>
+            <div class="acg-art" aria-hidden="true"><svg viewBox="0 0 400 400"><path d="M40 96 H150 V176 H40 Z"/><path d="M40 96 L95 140 L150 96"/><path d="M150 136 H196"/><path d="M186 126 L198 136 L186 146"/><rect x="210" y="50" width="130" height="270" rx="0"/><rect x="235" y="120" width="80" height="80"/><path d="M247 132 h22 v22 h-22 z M281 132 h22 v22 h-22 z M247 166 h22 v22 h-22 z M285 170 h6 v6 h-6 z M297 182 h6 v6 h-6 z"/><path d="M240 230 H310 M250 250 H300 M260 296 H290"/><path d="M40 340 H360"/></svg></div>
+          </article>
+          <article class="bc acg-step" data-k="1">
+            <div class="acg-mk"><span class="acg-n">02</span></div>
+            <div class="acg-body"><p class="label">El día del evento</p><div class="acg-hd"><h3 class="display">Controlamos el acceso</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 6h16v12H8z"/><path d="M16 18v8"/><path d="M10 26h12"/><path d="M3 12h26"/></svg></i></div><div class="acg-tx"><p>El día del evento, al escanear el QR se valida la entrada.</p><p>Podemos ver a través de un panel quién ha llegado, y se evitan duplicidades y accesos no autorizados.</p><p>Este mismo sistema puede usarse para el servicio de guardarropía.</p></div></div>
+            <div class="acg-art" aria-hidden="true"><svg viewBox="0 0 400 400"><rect x="60" y="110" width="120" height="90"/><path d="M120 200 V320 M70 320 H170"/><path d="M80 135 H160 M80 155 H140"/><path class="scan" d="M40 172 H200"/><path d="M230 120 H350 V250 H230 Z"/><path d="M230 148 H350"/><path d="M248 172 l6 6 l12 -12 M276 172 H330 M248 198 l6 6 l12 -12 M276 198 H322 M248 224 H262 M276 224 H316"/><path d="M290 250 V286 M262 286 H318"/><path d="M40 340 H360"/></svg></div>
+          </article>
         </div>
       </div>
 
       <div class="container iv-block iv-renders">
         <div class="iv-bh"><span class="label">03 · Renders y fotomontajes</span></div>
-        <div class="rd-grid rd-fm">
-          <figure class="rd-ph fm-a"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-entrada.webp" width="2000" height="750" decoding="async" loading="lazy" alt="Fotomontaje de la entrada de Madnum con el logotipo LM 2026 en el cristal, tótem de señalética y panel del Leadership Meeting 2026"></div><figcaption class="label">Fotomontaje · Entrada</figcaption></figure>
-          <figure class="rd-ph fm-c"><div class="photo" data-fx=".3" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-acceso.webp" width="1600" height="900" decoding="async" loading="lazy" alt="Fotomontaje del acceso exterior de Madnum con tótem de bienvenida y tótem de señalética del Leadership Meeting 2026"></div><figcaption class="label">Fotomontaje · Acceso exterior</figcaption></figure>
-          <figure class="rd-ph fm-d"><div class="photo" data-fx=".5" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-suelo.webp" width="1600" height="900" decoding="async" loading="lazy" alt="Fotomontaje del acceso exterior de Madnum con vinilo de suelo que dirige al auditorio"></div><figcaption class="label">Fotomontaje · Señalética hacia el auditorio</figcaption></figure>
-          <figure class="rd-ph fm-b"><div class="photo" data-fx=".7" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-vestibulo.webp" width="1600" height="880" decoding="async" loading="lazy" alt="Fotomontaje del vestíbulo de Madnum con tótem de bienvenida, pantalla del Leadership Meeting 2026 y árbol de Navidad"></div><figcaption class="label">Fotomontaje · Vestíbulo</figcaption></figure>
-          <figure class="rd-ph fm-e"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-sala.webp" width="1600" height="900" decoding="async" loading="lazy" alt="Fotomontaje de una sala de Madnum con dos pantallas del Leadership Meeting 2026 y árbol de Navidad"></div><figcaption class="label">Fotomontaje · Sala</figcaption></figure>
-          <figure class="rd-ph fm-f"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="4"><img src="img/render-auditorio.webp" width="1448" height="1086" decoding="async" alt="Render del auditorio de Madnum preparado para el Leadership Meeting 2026" loading="lazy"></div><figcaption class="label">Render · Auditorio</figcaption></figure>
+        <div class="rd-fm">
+          <div class="fm-row">
+            <figure class="rd-ph" style="--ar: 1.7768"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-acceso.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje del acceso exterior de Madnum con tótem de bienvenida y tótem de señalética del Leadership Meeting 2026"></div><figcaption class="label">Fotomontaje · Acceso exterior</figcaption></figure>
+            <figure class="rd-ph" style="--ar: 2.6667"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-entrada.webp" width="2048" height="768" decoding="async" loading="lazy" alt="Fotomontaje de la entrada de Madnum con el logotipo LM 2026 en el cristal, tótem de señalética y panel del Leadership Meeting 2026"></div><figcaption class="label">Fotomontaje · Entrada</figcaption></figure>
+          </div>
+          <div class="fm-row">
+            <figure class="rd-ph" style="--ar: 1.6619"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-registro.webp" width="1617" height="973" decoding="async" loading="lazy" alt="Fotomontaje del registro de Madnum: mostrador A–L y M–Z con pantalla del Leadership Meeting 2026 junto a la barra"></div><figcaption class="label">Fotomontaje · Registro</figcaption></figure>
+            <figure class="rd-ph" style="--ar: 1.7768"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-sala.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala del coffee break de Madnum con dos pantallas del Leadership Meeting 2026 y árbol de Navidad"></div><figcaption class="label">Fotomontaje · Sala del coffee break</figcaption></figure>
+            <figure class="rd-ph" style="--ar: 0.7819"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-vinilo.webp" width="1086" height="1389" decoding="async" loading="lazy" alt="Fotomontaje del camino exterior de Madnum con vinilo de suelo que dirige al auditorio"></div><figcaption class="label">Fotomontaje · Vinilo</figcaption></figure>
+          </div>
+          <div class="fm-row">
+            <figure class="rd-ph" style="--ar: 1.3333"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-auditorio.webp" width="1448" height="1086" decoding="async" loading="lazy" alt="Fotomontaje de la entrada al auditorio de Madnum con pantalla LM 2026 y tótem de bienvenida"></div><figcaption class="label">Fotomontaje · Entrada al auditorio</figcaption></figure>
+            <figure class="rd-ph" style="--ar: 1.8194"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-vestibulo.webp" width="1692" height="930" decoding="async" loading="lazy" alt="Fotomontaje del vestíbulo de Madnum con tótem de bienvenida, pantalla del Leadership Meeting 2026 y árbol de Navidad"></div><figcaption class="label">Fotomontaje · Vestíbulo y árbol de Navidad</figcaption></figure>
+          </div>
+          <div class="fm-row">
+            <figure class="rd-ph" style="--ar: 1.6273"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-render-auditorio.webp" width="2000" height="1229" decoding="async" loading="lazy" alt="Render del auditorio de Madnum con la pantalla del Leadership Meeting 2026, atril y frontal de escenario iluminado"></div><figcaption class="label">Render · Auditorio</figcaption></figure>
+            <figure class="rd-ph fm-plan" style="--ar: 1.9787"><a class="plan" href="img/madnum-plano-auditorio.webp" target="_blank" rel="noopener"><img src="img/madnum-plano-auditorio.webp" width="1488" height="752" decoding="async" loading="lazy" alt="Plano de escenografía del auditorio de Madnum: pantalla de 6,40 × 3,40 m y frontal de escenario con el rótulo Leadership Meeting 2026 de 3,65 m"></a><figcaption class="label">Plano · Escenografía del auditorio</figcaption></figure>
+          </div>
         </div>
       </div>
       <div class="container iv-next"><button class="iv-jump" type="button" data-go="rft"><span class="label">Siguiente sede · B</span><span class="ij-n display">Real Fábrica de Tapices</span><i aria-hidden="true">→</i></button></div>
@@ -1509,7 +1656,7 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
     <!-- ===== Variante B · Real Fábrica de Tapices ===== -->
     <div class="impl-v" data-v="rft" role="tabpanel" hidden>
       <div class="container iv-hero">
-        <h2 class="iv-name display"><span class="ln"><span>Real Fábrica</span></span><span class="ln"><span>de Tapices</span></span></h2>
+        <h3 class="iv-name display"><span class="ln"><span>Real Fábrica</span></span><span class="ln"><span>de Tapices</span></span></h3>
         <dl class="iv-meta">
           <div><dt class="label"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 16a11 11 0 1 0 22 0a11 11 0 1 0 -22 0"/><path d="M16 9v7l5 3"/></svg></i>Horario</dt><dd>14:30–18:00</dd></div>
           <div><dt class="label"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 10a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M4 27v-3a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v3"/><path d="M20 6.5a3.5 3.5 0 0 1 0 7"/><path d="M23 18a5 5 0 0 1 5 5v4"/></svg></i>En la sede</dt><dd>Almuerzo</dd></div>
@@ -1545,32 +1692,40 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 
       <div class="container iv-block iv-arrive">
         <div class="iv-bh"><span class="label">02 · Llegada y acomodación</span></div>
-        <div class="seq seq-3" data-seq>
-          <div class="seq-art">
-            <svg viewBox="0 0 400 400" aria-hidden="true">
-              <g class="sq-s" data-s="0"><rect x="40" y="140" width="90" height="40"/><rect x="150" y="140" width="90" height="40"/><rect x="260" y="140" width="90" height="40"/><rect x="95" y="230" width="90" height="40"/><rect x="205" y="230" width="90" height="40"/><path d="M40 320 H360 M60 312 V328 M250 312 V328"/></g>
-              <g class="sq-s" data-s="1"><path d="M40 100 H360 M40 300 H360 M200 40 V360"/><rect x="90" y="80" width="40" height="40"/><rect x="270" y="280" width="40" height="40"/><path d="M110 120 L200 200 L290 280"/></g>
-              <g class="sq-s" data-s="2"><path d="M200 340 V60"/><path d="M200 90 H300 L330 120 L300 150 H200"/><path d="M200 190 H100 L70 220 L100 250 H200"/><path d="M150 340 H250"/></g>
-              <g class="sq-s" data-s="3"><rect x="80" y="60" width="240" height="170"/><path d="M104 90 H190 M104 116 H176 M104 142 H196 M104 168 H170 M104 194 H186"/><path d="M226 90 H296 M226 116 H296 M226 142 H296 M226 168 H296 M226 194 H296"/><path d="M200 230 V320 M150 320 H250"/></g>
-            </svg>
-            <span class="seq-n label"><b class="roll" data-roll>01</b> / 04</span>
-          </div>
-          <ol class="seq-steps">
-            <li data-s="0"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 6h22v16H5z"/><path d="M5 12h22"/><path d="M16 6v6"/><path d="M8 18h3M21 18h3"/><path d="M8 24.5a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M20 24.5a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/></svg></i><h3>Cinco autocares</h3><p>Dos oleadas con 3 minutos de separación.</p></li>
-            <li data-s="1"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M28 5v22"/><path d="M4 9h12m-3-3 3 3-3 3"/><path d="M4 16h16m-3-3 3 3-3 3"/><path d="M4 23h20m-3-3 3 3-3 3"/></svg></i><h3>Descarga escalonada</h3><p>En los dos puntos de carga junto a la Real Fábrica.</p></li>
-            <li data-s="2"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4v24"/><path d="M10 28h12"/><path d="M16 7h9l3 3-3 3h-9"/><path d="M16 15H7l-3 3 3 3h9"/></svg></i><h3>Señalética</h3><p>Recorrido hasta el almuerzo.</p></li>
-            <li data-s="3"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 5h24v15H4z"/><path d="M8 9h7M8 13h7M8 17h5"/><path d="M18 9h6M18 13h6M18 17h6"/><path d="M16 20v7"/><path d="M11 27h10"/></svg></i><h3>Pantallas de seating</h3><p>Mapa de mesas a la entrada. Diseño pendiente.</p></li>
-          </ol>
-          <figure class="seq-ref pending" aria-label="Pendiente: imagen"><svg class="pd-x" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 L100 100 M100 0 L0 100" vector-effect="non-scaling-stroke"/></svg><figcaption class="label"><b>Pendiente</b><span>Imagen</span></figcaption></figure>
+        <div class="bgrid acg acg-rft" data-xgrid>
+          <div class="bc acg-lead"><p class="label">¿Cómo funciona?</p><p class="acr-lead">Una llegada escalonada y sin aglomeraciones: los autocares salen con 5 minutos de diferencia y el personal de la agencia coordina la descarga y el recorrido hasta la mesa.</p></div>
+          <figure class="bc acg-ph"><div class="acg-stick"><div class="acg-shot"><img src="img/rft-seating.webp" width="1448" height="1086" decoding="async" loading="lazy" alt="Mockup de la pantalla de seating: plano de la sala con 26 mesas numeradas sobre el fondo del key visual del Leadership Meeting 2026"></div><figcaption class="label">Mockup · Pantalla con el plano de mesas</figcaption></div></figure>
+          <article class="bc acg-step" data-k="0">
+            <div class="acg-mk"><span class="acg-n">01</span><i class="acg-ln" aria-hidden="true"></i></div>
+            <div class="acg-body"><p class="label">En autocar</p><div class="acg-hd"><h3 class="display">Salida escalonada</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 6h22v16H5z"/><path d="M5 12h22"/><path d="M16 6v6"/><path d="M8 18h3M21 18h3"/><path d="M8 24.5a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M20 24.5a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/></svg></i></div><div class="acg-tx"><p>Los vehículos salen con una diferencia de 5 minutos entre ellos.</p><p>Así la llegada a la Real Fábrica de Tapices es escalonada y sin aglomeraciones.</p></div></div>
+            <div class="acg-art" aria-hidden="true"><svg viewBox="0 0 400 400"><path d="M40 262 H120 V322 H40 Z"/><path d="M48 274 H112 V292 H48 Z"/><path d="M60 330 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 M86 330 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0"/><path d="M126 212 a14 14 0 1 0 28 0 a14 14 0 1 0 -28 0"/><path d="M140 212 V202 M140 212 H147"/><path d="M124 240 H156" stroke-dasharray="4 6"/><path d="M160 262 H240 V322 H160 Z"/><path d="M168 274 H232 V292 H168 Z"/><path d="M180 330 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 M206 330 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0"/><path d="M246 212 a14 14 0 1 0 28 0 a14 14 0 1 0 -28 0"/><path d="M260 212 V202 M260 212 H267"/><path d="M244 240 H276" stroke-dasharray="4 6"/><path d="M280 262 H360 V322 H280 Z"/><path d="M288 274 H352 V292 H288 Z"/><path d="M300 330 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 M326 330 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0"/><path d="M40 340 H360"/></svg></div>
+          </article>
+          <article class="bc acg-step" data-k="1">
+            <div class="acg-mk"><span class="acg-n">02</span><i class="acg-ln" aria-hidden="true"></i></div>
+            <div class="acg-body"><p class="label">A la llegada</p><div class="acg-hd"><h3 class="display">Puntos de carga y descarga</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 28c0 0-8-8.5-8-14a8 8 0 0 1 16 0c0 5.5-8 14-8 14z"/><path d="M13 14a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/></svg></i></div><div class="acg-tx"><p>En función de las condiciones de tráfico, en uno de estos dos puntos:</p><ul class="acg-li"><li>Paseo de la Reina Cristina, esquina con calle Julián Gayarre.</li><li>Avenida de la Ciudad de Barcelona, esquina con calle Vandergoten.</li></ul><p>Todo estará coordinado por personal de la agencia.</p></div></div>
+            <div class="acg-art" aria-hidden="true"><svg viewBox="0 0 400 400"><path d="M40 110 H360 M40 270 H360 M110 60 V340 M300 60 V340"/><path d="M150 140 H260 V240 H150 Z"/><path d="M175 240 V205 H235 V240"/><path d="M110 110 c0 0 -24 -28 -24 -46 a24 24 0 0 1 48 0 c0 18 -24 46 -24 46 z"/><path d="M102 64 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0"/><path d="M300 270 c0 0 -24 -28 -24 -46 a24 24 0 0 1 48 0 c0 18 -24 46 -24 46 z"/><path d="M292 224 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0"/><path d="M40 340 H360"/></svg></div>
+          </article>
+          <article class="bc acg-step" data-k="2">
+            <div class="acg-mk"><span class="acg-n">03</span><i class="acg-ln" aria-hidden="true"></i></div>
+            <div class="acg-body"><p class="label">En la sede</p><div class="acg-hd"><h3 class="display">Señalética</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4v24M10 28h12"/><path d="M8 7h14l3 3-3 3H8z"/><path d="M24 16H10l-3 3 3 3h14z"/></svg></i></div><div class="acg-tx"><p>Tótem de bienvenida con el key visual en el acceso principal, orientado para que se vea desde la entrada.</p><p>Tótem con flecha hacia Sala Goya.</p><p>Tótem de aseos en el espacio neutro.</p></div></div>
+            <div class="acg-art" aria-hidden="true"><svg viewBox="0 0 400 400"><path d="M70 80 H160 V320 H70 Z"/><path d="M115 250 V140 M92 163 L115 140 L138 163"/><path d="M88 100 H142"/><path d="M240 150 H320 V320 H240 Z"/><path d="M262 205 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 M270 216 V250 M284 205 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 M292 216 V250"/><path d="M256 170 H304"/><path d="M40 340 H360"/></svg></div>
+          </article>
+          <article class="bc acg-step" data-k="3">
+            <div class="acg-mk"><span class="acg-n">04</span></div>
+            <div class="acg-body"><p class="label">Acomodación</p><div class="acg-hd"><h3 class="display">Pantallas de seating</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 6h24v15H4z"/><path d="M16 21v5M11 26h10"/><path d="M9 11.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0M20 11.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0M14.5 16a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0"/></svg></i></div><div class="acg-tx"><p>Plano de mesas numeradas sobre el fondo del key visual, en pantallas de plasma.</p></div></div>
+            <div class="acg-art" aria-hidden="true"><svg viewBox="0 0 400 400"><path d="M50 70 H350 V250 H50 Z"/><path d="M200 250 V316 M150 316 H250"/><path d="M95 125 a15 15 0 1 0 30 0 a15 15 0 1 0 -30 0"/><path d="M155 125 a15 15 0 1 0 30 0 a15 15 0 1 0 -30 0"/><path d="M215 125 a15 15 0 1 0 30 0 a15 15 0 1 0 -30 0"/><path d="M275 125 a15 15 0 1 0 30 0 a15 15 0 1 0 -30 0"/><path d="M125 195 a15 15 0 1 0 30 0 a15 15 0 1 0 -30 0"/><path d="M185 195 a15 15 0 1 0 30 0 a15 15 0 1 0 -30 0"/><path d="M245 195 a15 15 0 1 0 30 0 a15 15 0 1 0 -30 0"/><path d="M40 340 H360"/></svg></div>
+          </article>
         </div>
       </div>
 
       <div class="container iv-block iv-renders">
         <div class="iv-bh"><span class="label">03 · Renders y fotomontajes</span></div>
-        <div class="rd-grid rd-three">
-          <figure class="pending" aria-label="Pendiente: render de ambientación"><svg class="pd-x" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 L100 100 M100 0 L0 100" vector-effect="non-scaling-stroke"/></svg><figcaption class="label"><b>Pendiente</b><span>Render de ambientación y referencias florales</span></figcaption></figure>
-          <figure class="pending" aria-label="Pendiente: señalética y pantallas de seating"><svg class="pd-x" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 L100 100 M100 0 L0 100" vector-effect="non-scaling-stroke"/></svg><figcaption class="label"><b>Pendiente</b><span>Señalética y pantallas de seating</span></figcaption></figure>
-          <figure class="pending" aria-label="Pendiente: fotografías de Sala Goya y Plaza Jardín Goya"><svg class="pd-x" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 L100 100 M100 0 L0 100" vector-effect="non-scaling-stroke"/></svg><figcaption class="label"><b>Pendiente</b><span>Fotografías de Sala Goya y Plaza Jardín Goya</span></figcaption></figure>
+        <div class="rd-fm">
+          <div class="fm-row">
+            <figure class="rd-ph" style="--ar: 1.3336"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/rft-fm-acceso.webp" width="1447" height="1085" decoding="async" loading="lazy" alt="Fotomontaje del acceso principal a la Real Fábrica de Tapices con el tótem de bienvenida del Leadership Meeting 2026"></div><figcaption class="label">Fotomontaje · Acceso principal</figcaption></figure>
+            <figure class="rd-ph" style="--ar: 1.7768"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/rft-fm-goya.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje del jardín de la Real Fábrica de Tapices con el tótem que indica Sala Goya hacia arriba"></div><figcaption class="label">Fotomontaje · Camino a Sala Goya</figcaption></figure>
+            <figure class="rd-ph" style="--ar: 0.75"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/rft-totem-aseos.webp" width="1086" height="1448" decoding="async" loading="lazy" alt="Mockup del tótem de aseos del Leadership Meeting 2026 en la Real Fábrica de Tapices"></div><figcaption class="label">Mockup · Tótem de aseos</figcaption></figure>
+          </div>
         </div>
       </div>
       <div class="container iv-next"><button class="iv-jump" type="button" data-go="madnum"><span class="label">Sede anterior · A</span><span class="ij-n display">Madnum</span><i aria-hidden="true">←</i></button></div>
@@ -1581,9 +1736,8 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 
   <!-- ============ 06 · PLAN OPERATIVO Y CONTINGENCIAS ============ -->
   <section class="ops" id="operativa" data-nav="operativa">
-    <div class="bar container label"><span>06 · Plan operativo y contingencias</span><span class="bracket">LM26.6</span></div>
+    <div class="bar sec container"><h2 class="sec-t"><b>06</b><span>Plan operativo y contingencias</span></h2><span class="bracket label">LM26.6</span></div>
     <div class="container ops-head">
-      <h2 class="display d-l"><span class="ln"><span>Plan operativo</span></span><span class="ln"><span>y contingencias</span></span></h2>
       <p class="ops-lead">Control de tiempos y respuesta a incidencias: colas en registro, tráfico, equipaje, aglomeración a la llegada a la Real Fábrica de Tapices, guardarropa, movimientos sin abrigo y desviaciones de agenda.</p>
     </div>
     <div class="ops-pin" id="opsPin">
@@ -1632,12 +1786,23 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 
   <!-- ============ 07 · ORGANIGRAMA ============ -->
   <section class="organigrama" id="organigrama" data-nav="organigrama">
-    <div class="bar container label"><span>07 · Organigrama</span><span class="bracket">LM26.7</span></div>
+    <div class="bar sec container"><h2 class="sec-t"><b>07</b><span>Organigrama</span></h2><span class="bracket label">LM26.7</span></div>
     <div class="container">
-      <figure class="pending org" aria-label="Pendiente: organigrama">
-        <svg class="pd-x" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 L100 100 M100 0 L0 100" vector-effect="non-scaling-stroke"/></svg>
-        <figcaption class="label"><b>Pendiente</b><span>Organigrama del equipo</span></figcaption>
-      </figure>
+      <div class="org-wrap">
+        <div class="iv-bh"><span class="label">Equipo del proyecto · beon. worldwide</span></div>
+        <div class="bgrid org-g" data-xgrid>
+          <div class="bc org-top">
+            <div class="org-client"><img src="img/gestamp-logo.svg" width="422" height="76" alt="Gestamp"><svg class="org-ar org-up" viewBox="0 0 16 40" aria-hidden="true"><path d="M8 38V3M3 8l5-5 5 5"/></svg></div>
+            <div class="org-head"><div class="ogp ogp-pm"><span class="ogp-av" aria-hidden="true"><img src="img/org/patricia-candel.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Patricia Candel</p><p class="ogp-r">Responsable de proyecto</p></div></div><svg class="org-ar org-lr" viewBox="0 0 56 16" aria-hidden="true"><path d="M3 8h50M8 3 3 8l5 5M48 3l5 5-5 5"/></svg><div class="ogp ogp-pm"><span class="ogp-av" aria-hidden="true"><img src="img/org/maria-colao.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">María Colao</p><p class="ogp-r">Directora de Eventos</p></div></div></div>
+            <div class="org-bus" aria-hidden="true"><i class="ob-stem"></i><i class="ob-line"></i><i class="ob-d"></i><i class="ob-d"></i><i class="ob-d"></i><i class="ob-d"></i><i class="ob-d"></i></div>
+          </div>
+          <section class="bc org-dep" aria-label="Tecnología"><p class="org-pill label">Tecnología</p><div class="ogp ogp-lead"><span class="ogp-av" aria-hidden="true"><img src="img/org/javier-gumiel.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Javier Gumiel</p><p class="ogp-r">CTO</p></div></div><svg class="org-ar" viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M3 16l5 5 5-5"/></svg><div class="org-mem"><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/juanjo-peralta.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Juanjo Peralta</p><p class="ogp-r">I+D y Tecnología</p></div></div></div></section>
+          <section class="bc org-dep" aria-label="Producción"><p class="org-pill label">Producción</p><div class="ogp ogp-lead"><span class="ogp-av" aria-hidden="true"><img src="img/org/jesus-tenorio.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Jesús Tenorio</p><p class="ogp-r">Director de Producción</p></div></div><svg class="org-ar" viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M3 16l5 5 5-5"/></svg><div class="org-mem"><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/raul-del-valle.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Raúl del Valle</p><p class="ogp-r">Carpintería</p></div></div><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/mercedes-osborne.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Mercedes Osborne</p><p class="ogp-r">Audiovisual</p></div></div><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/m-angel-alonso.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">M. Ángel Alonso</p><p class="ogp-r">Impresión</p></div></div></div></section>
+          <section class="bc org-dep" aria-label="Creatividad"><p class="org-pill label">Creatividad</p><div class="ogp ogp-lead"><span class="ogp-av" aria-hidden="true"><img src="img/org/j-manuel-nicolas.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">J. Manuel Nicolás</p><p class="ogp-r">Dir. Creativo Ejecutivo</p></div></div><svg class="org-ar" viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M3 16l5 5 5-5"/></svg><div class="org-mem"><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/eduardo-gonzalez.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Eduardo González</p><p class="ogp-r">Dirección de Arte</p></div></div></div></section>
+          <section class="bc org-dep" aria-label="Diseño espacial"><p class="org-pill label">Diseño espacial</p><div class="ogp ogp-lead"><span class="ogp-av" aria-hidden="true"><img src="img/org/nuria-gonzalez.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Nuria González</p><p class="ogp-r">Directora Arquitectura Efímera</p></div></div><svg class="org-ar" viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M3 16l5 5 5-5"/></svg><div class="org-mem"><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/carlos-blanca.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Carlos Blanca</p><p class="ogp-r">Diseño 3D</p></div></div><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/laura-ortega.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Laura Ortega</p><p class="ogp-r">Planimetría</p></div></div></div></section>
+          <section class="bc org-dep" aria-label="Contenidos"><p class="org-pill label">Contenidos</p><div class="ogp ogp-lead"><span class="ogp-av" aria-hidden="true"><img src="img/org/alberto-munoz.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Alberto Muñoz</p><p class="ogp-r">Contenido Audiovisual</p></div></div><svg class="org-ar" viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M3 16l5 5 5-5"/></svg><div class="org-mem"><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/ana-martinez.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Ana Martínez</p><p class="ogp-r">Edición de Vídeo</p></div></div><div class="ogp"><span class="ogp-av" aria-hidden="true">GB</span><div class="ogp-t"><p class="ogp-n">Guillermo Bilbao</p><p class="ogp-r">Regidor</p></div></div></div></section>
+        </div>
+      </div>
       <div class="cred" data-cred data-n="18">
         <div class="iv-bh"><span class="label">Credenciales · beon. worldwide</span><a class="label cred-dl" href="img/cred/credenciales-beon.pdf" target="_blank" rel="noopener">Abrir PDF <i aria-hidden="true">↗</i></a></div>
         <div class="cred-view">
@@ -1659,7 +1824,7 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 
   <!-- ============ CIERRE ============ -->
   <section class="closing inv" id="contacto" data-nav="">
-    <div class="bar container label"><span>Leadership Meeting 2026 · Madrid</span><span class="bracket">LM26.8</span></div>
+    <div class="bar container label"><span>Leadership Meeting 2026 · Madrid</span><span class="bracket label">LM26.8</span></div>
     <div class="container">
       <div class="cl-route" aria-label="La jornada: 07:45 Only YOU Atocha, 08:15 Madnum, 14:30 Real Fábrica de Tapices, 18:00 traslado al aeropuerto">
         <i class="cl-plan" aria-hidden="true"></i><i class="cl-ink" aria-hidden="true"></i><i class="cl-head" aria-hidden="true"></i>
@@ -1679,6 +1844,10 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
   </section>
 </main>
 
+<dialog class="acr-box lbx" id="lbx" aria-label="Imagen a pantalla completa">
+  <figure class="lbx-in"><img alt=""><figcaption class="label"></figcaption></figure>
+  <button class="acr-close" type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+</dialog>
 <dialog class="acr-box" id="acrBox" aria-label="Invitación del Leadership Meeting 2026">
   <div class="acr-scroll" data-lenis-prevent>
     <img src="img/lm26-invitacion.webp" width="600" height="1576" decoding="async" loading="lazy" alt="Email de invitación del Leadership Meeting 2026: pase en PDF y Apple Wallet, número de identificación, alojamiento en Only YOU Atocha Hotel y agenda del día">
@@ -1934,6 +2103,22 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
     stopIcon(i, dir, anim); listTo(li);
   }
   setStop(0, true);
+  /* caja de la parada: alto fijo = el de la parada que más ocupa (título y lugar medidos con su ancho real) */
+  (function () {
+    var box = $(".j-now"); if (!box || !jTitle || !jPlace) return;
+    var m = document.createElement("div"); m.className = "j-now-m"; m.setAttribute("aria-hidden", "true");
+    var mt = document.createElement("span"), mp = document.createElement("span"); mt.className = "ti"; mp.className = "pl"; m.appendChild(mt); m.appendChild(mp); box.appendChild(m);
+    function size() {
+      if (!box.offsetParent) return;
+      var wt = jTitle.clientWidth, wp = jPlace.clientWidth; if (!wt || !wp) return;
+      mt.style.width = wt + "px"; mp.style.width = wp + "px"; var h = 0;
+      stops.forEach(function (li) { mt.textContent = li.dataset.title; mp.textContent = li.dataset.place; h = Math.max(h, mt.offsetHeight + 6 + mp.offsetHeight); });
+      var cs = getComputedStyle(box), pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+      h = Math.max(h, jTime.offsetHeight);
+      box.style.setProperty("--jh", Math.ceil(h + pad) + "px");
+    }
+    size(); if (document.fonts) document.fonts.ready.then(size); addEventListener("resize", size); addEventListener("load", size);
+  })();
 
   /* ---------- Jornada: narrativa en malla (8 escenas que se transforman) ----------
      Hotel → acreditación → escenario → café → escenario (otro ángulo) → autobús → restaurante → hotel de noche.
@@ -2951,6 +3136,32 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
   }
 
   /* ---------- Sin movimiento ---------- */
+  /* visor: cualquier foto se abre a pantalla completa, entera y con su pie; Escape, el botón o el fondo lo cierran */
+  (function () {
+    var box = $("#lbx"); if (!box || !box.showModal) return;
+    var im = $("img", box), cap = $("figcaption", box), from = null;
+    function shut() { if (box.open) box.close(); }
+    function show(el) {
+      var i = el.tagName === "IMG" ? el : $("img", el); if (!i) return;
+      im.src = i.currentSrc || i.src; im.alt = i.alt || "";
+      var f = el.closest("figure"), fc = f && f.querySelector(":scope > figcaption, .acg-stick > figcaption");
+      cap.textContent = fc ? fc.textContent.replace(/\s+/g, " ").trim() : "";
+      from = el; box.showModal(); if (lenis) lenis.stop();
+    }
+    $$(".photo, .idg-kv img, .idg-v img, .a4-pair img, .rd-fm .plan, .acg-shot img").forEach(function (el) {
+      if (el.closest(".hero")) return;
+      var i = el.tagName === "IMG" ? el : $("img", el);
+      el.classList.add("zoomable");
+      if (el.tagName !== "A") { el.setAttribute("tabindex", "0"); el.setAttribute("role", "button"); }
+      el.setAttribute("aria-label", "Ver a pantalla completa" + (i && i.alt ? ": " + i.alt : ""));
+      el.addEventListener("click", function (e) { e.preventDefault(); show(el); });
+      el.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(el); } });
+    });
+    box.addEventListener("close", function () { if (lenis) lenis.start(); if (from) from.focus({ preventScroll: true }); });
+    $(".acr-close", box).addEventListener("click", shut);
+    box.addEventListener("click", function (e) { if (e.target === box || e.target.classList.contains("lbx-in")) shut(); });
+  })();
+
   if (!motion) {
     $("#jornada").classList.add("static");
     stops.forEach(function (li) { li.classList.add("is-on"); });
@@ -3230,8 +3441,7 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
   });
   $$(".stat").forEach(function (s, i) { if (s.closest(".bgrid")) return; scrub(s, "top 98%", "clamp(top 75%)").from(s, { y: 50 + i * 15, opacity: 0, ease: "none" }); });
   /* rejilla del briefing: una cruz en cada intersección de filetes; al entrar, las cruces giran a su sitio y las celdas se asientan */
-  (function () {
-    var g = $(".bgrid"); if (!g) return;
+  $$("[data-xgrid]").forEach(function (g) {
     var cells = $$(".bc", g), marks = [];
     function place() {
       marks.forEach(function (m) { m.remove(); }); marks = [];
@@ -3246,8 +3456,8 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
     ScrollTrigger.create({ trigger: g, start: "top 80%", once: true, onEnter: function () {
       gsap.from(marks, { rotate: 90, scale: 0, duration: .9, ease: EASE.out, stagger: { each: .025, from: "start" } });
     } });
-    cells.forEach(function (c, i) { if (c.classList.contains("bc-ph") || c.classList.contains("pending")) return; scrub(c, "top 98%", "clamp(top 72%)").from(c.children, { y: 40, opacity: 0, stagger: .08, ease: "none" }); });
-  })();
+    cells.forEach(function (c, i) { if (c.tagName === "FIGURE" || c.classList.contains("bc-ph") || c.classList.contains("pending")) return; scrub(c, "top 98%", "clamp(top 72%)").from(c.children, { y: 40, opacity: 0, stagger: .08, ease: "none" }); });
+  });
 
   /* Barras de sección: el filete se tiende y las etiquetas entran */
   $$(".bar").forEach(function (b) {
@@ -3272,7 +3482,7 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
   var cards = $$(".card"), mm = gsap.matchMedia();
   mm.add({ wide: "(min-width: 861px)", narrow: "(max-width: 860px)" }, function (ctx) {
     var wide = ctx.conditions.wide;
-    var groups = (wide ? [cards.slice(0, 2), cards.slice(2, 4)] : cards.map(function (c) { return [c]; })).filter(function (g) { return g.length; });
+    var groups = (wide ? [cards] : cards.map(function (c) { return [c]; })).filter(function (g) { return g.length; });   /* una fila: las cuatro entran juntas, escalonadas */
     groups.forEach(function (g) {
       var tl = scrub(g[0], "top 98%", wide ? "clamp(top 55%)" : "clamp(top 62%)", 1);
       g.forEach(function (cd, k) {
@@ -3285,9 +3495,9 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
     });
   });
   /* Iconos: cada trazo se dibuja con su longitud real, despacio y a la vista */
-  $$(".card .p-icon").forEach(function (ic) {
+  $$(".card .p-icon, .idc .p-icon, .acg-art").forEach(function (ic) {
     var shapes = $$("svg *", ic);
-    shapes.forEach(function (sh) { sh.removeAttribute("pathLength"); var L = sh.getTotalLength ? sh.getTotalLength() : 600; sh.style.strokeDasharray = L + " " + L; sh.style.strokeDashoffset = L; sh._len = L; });
+    shapes.forEach(function (sh) { sh.removeAttribute("pathLength"); var L = 600; try { L = sh.getTotalLength() || 600; } catch (e) {}   /* dibujo oculto (móvil): sin medida, longitud por defecto */ sh.style.strokeDasharray = L + " " + L; sh.style.strokeDashoffset = L; sh._len = L; });
     var tl = scrub(ic, "top 90%", innerWidth > 860 ? "clamp(top 30%)" : "clamp(top 55%)", 1);
     shapes.forEach(function (sh, i) { tl.to(sh, { strokeDashoffset: 0, duration: .55, ease: "none" }, i * .15); });
   });
@@ -3610,16 +3820,17 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
       var out = panel(cur), inn = panel(v); if (!inn) return; cur = v;
       tabs.forEach(function (b) { var on = b.dataset.v === v; b.classList.toggle("is-on", on); b.setAttribute("aria-selected", on ? "true" : "false"); b.tabIndex = on ? 0 : -1; });
       placeInd();
-      var tgt = out.getBoundingClientRect().top + scrollY - wrap.offsetHeight + 1, back = scrollY > tgt + 2;
+      var tgt = out.getBoundingClientRect().top + scrollY - wrap.offsetHeight - (parseFloat(getComputedStyle(wrap).top) || 0) + 1, back = scrollY > tgt + 2;   /* la sede empieza justo bajo las pestañas fijadas */
       function swap() {
         out.hidden = true; inn.hidden = false;
         TOURS.forEach(function (f) { f(); });
+        $$(".ico", inn).forEach(function (ic) { if (ic._draw && ic.getBoundingClientRect().top < innerHeight * .92) ic._draw(); });   /* iconos que ya están a la vista al cambiar de sede */
         if (window.ScrollTrigger) ScrollTrigger.refresh();
         if (back) { if (lenis) lenis.scrollTo(tgt, { immediate: true, force: true }); else window.scrollTo(0, tgt); if (window.ScrollTrigger) ScrollTrigger.update(); }
       }
       if (!motion) { swap(); return; }
       swapping = true;
-      gsap.timeline({ onComplete: function () { swapping = false; } })
+      gsap.timeline({ onComplete: function () { swapping = false; setTimeout(function () { ScrollTrigger.refresh(); ScrollTrigger.refresh(); }, 0); } })   /* con la sede ya asentada se recalculan las animaciones de scroll; el fijado del recorrido recién creado necesita dos pasadas para que lo que viene debajo cuente su espacio */
         .to(out, { opacity: 0, y: -28, duration: .32, ease: EASE.in })
         .add(function () { gsap.set(out, { clearProps: "opacity,transform" }); swap(); })
         .fromTo(inn, { opacity: 0, y: 48 }, { opacity: 1, y: 0, duration: .7, ease: EASE.out, clearProps: "opacity,transform" });
@@ -3631,7 +3842,10 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
     });
     /* el botón del final cambia de sede igual que las pestañas fijas: misma transición y misma vuelta al inicio de la sede */
     $$(".iv-jump", sec).forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.go); }); });
-    function tabsH() { sec.style.setProperty("--tabs-h", wrap.offsetHeight + "px"); }
+    /* --tabs-h: dónde acaban las pestañas fijadas (su posición fija + su alto); el recorrido fijado empieza justo debajo */
+    function tabsH() { sec.style.setProperty("--tabs-h", (wrap.offsetHeight + (parseFloat(getComputedStyle(wrap).top) || 0)) + "px"); }
+    function stuck() { var t = parseFloat(getComputedStyle(wrap).top) || 0, r = wrap.getBoundingClientRect(), sr = sec.getBoundingClientRect(); wrap.classList.toggle("is-stuck", r.top <= t + .5 && sr.bottom > t + wrap.offsetHeight); }
+    addEventListener("scroll", stuck, { passive: true }); stuck();
     tabsH(); addEventListener("resize", tabsH); if (document.fonts) document.fonts.ready.then(tabsH);
     placeInd(true); addEventListener("resize", function () { placeInd(true); });
     if (document.fonts) document.fonts.ready.then(function () { placeInd(true); });
@@ -3750,7 +3964,7 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
       box.addEventListener("close", function () { if (lenis) lenis.start(); th.focus({ preventScroll: true, focusVisible: false }); });
       $(".acr-close", box).addEventListener("click", shut);
       box.addEventListener("click", function (e) { if (e.target === box || e.target.classList.contains("acr-scroll")) shut(); });
-    } else if (th) th.addEventListener("click", function () { window.open("img/lm23-invitacion.webp", "_blank", "noopener"); });
+    } else if (th) th.addEventListener("click", function () { window.open("img/lm26-invitacion.webp", "_blank", "noopener"); });
     /* secuencia: la ilustración fija se dibuja y se desdibuja de forma continua con el scroll; entre dos pasos,
        los trazos del que sale se recogen mientras se tienden los del que entra. El contador rueda al cambiar. */
     $$("[data-seq]", sec).forEach(function (sq) {
@@ -3866,9 +4080,32 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
   })();
 
   /* ---------- Iconos: cada trazo se dibuja al aparecer, con su longitud real ---------- */
-  if (motion) $$(".stat .ico, .iv-meta .ico, .iv-spaces .ico, .seq-steps .ico, .cl-route .ico, .pk-h .ico, .fl-row .ico, .alert .ico").forEach(function (ic) {
-    var ps = $$("path", ic); ps.forEach(function (p) { var L = p._L || (p._L = p.getTotalLength() || 60); p.style.strokeDasharray = L + " " + L; p.style.strokeDashoffset = L; });
-    ScrollTrigger.create({ trigger: ic, start: "top 92%", onEnter: function (self) { if (ic.offsetParent === null) return; self.kill(); var k = Array.prototype.indexOf.call(ic.parentNode.children, ic); gsap.to(ps, { strokeDashoffset: 0, duration: 1, delay: Math.max(0, k) * .08, ease: EASE.out, stagger: .07 }); } });   /* en una sede oculta espera a que se muestre */
+  if (motion) $$(".acg-hd .ico, .stat .ico, .iv-meta .ico, .iv-spaces .ico, .seq-steps .ico, .cl-route .ico, .pk-h .ico, .fl-row .ico, .alert .ico").forEach(function (ic) {
+    var ps = $$("path", ic); ps.forEach(function (p) { var L = p._L; if (!L) { try { L = p.getTotalLength(); } catch (e) {} L = p._L = L || 60; } p.style.strokeDasharray = L + " " + L; p.style.strokeDashoffset = L; });
+    function go(self) { if (ic._drawn || ic.offsetParent === null) return; ic._drawn = true; if (self) self.kill(); var k = Array.prototype.indexOf.call(ic.parentNode.children, ic); gsap.to(ps, { strokeDashoffset: 0, duration: 1, delay: Math.max(0, k) * .08, ease: EASE.out, stagger: .07 }); }
+    ic._draw = go;
+    ScrollTrigger.create({ trigger: ic, start: "top 92%", onEnter: go });   /* en una sede oculta espera a que se muestre */
+  });
+
+  /* ---------- Acreditación: el tiempo que se lee se marca en blanco y el trazo 01 → 02 se tiende con el scroll ---------- */
+  $$(".acg").forEach(function (g) {
+    var st = $$(".acg-step", g);
+    if (!motion) { st.forEach(function (s) { s.classList.add("is-on"); var l = $(".acg-ln", s); if (l) l.style.setProperty("--p", 1); }); return; }
+    st.forEach(function (s) {
+      ScrollTrigger.create({ trigger: s, start: "top 62%", end: "bottom 62%", toggleClass: { targets: s, className: "is-on" } });
+      var l = $(".acg-ln", s); if (l) scrub(s, "top 62%", "bottom 62%", 1).fromTo(l, { "--p": 0 }, { "--p": 1, ease: "none" });   /* cada tramo del trazo une un paso con el siguiente */
+    });
+  });
+
+  /* ---------- 07 · Organigrama: el tronco baja, la barra se abre hacia las cinco áreas y cada flecha llega a su cabecera ---------- */
+  $$(".org-bus").forEach(function (bus) {
+    var parts = [$(".ob-stem", bus), $(".ob-line", bus)].concat($$(".ob-d", bus));
+    if (!motion) return;
+    parts.forEach(function (p) { p.style.setProperty("--d", 0); });
+    scrub(bus, "top 92%", "clamp(top 60%)", 1)
+      .to(parts[0], { "--d": 1, ease: "none", duration: .3 })
+      .to(parts[1], { "--d": 1, ease: "none", duration: .4 })
+      .to(parts.slice(2), { "--d": 1, ease: "none", duration: .3 });
   });
 
   /* ---------- Visor de credenciales: página a página, miniaturas, teclado, gesto y pantalla completa ---------- */
@@ -3962,6 +4199,5 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
   addEventListener("load", refit);
 })();
 </script>
-
 </body>
 </html>
