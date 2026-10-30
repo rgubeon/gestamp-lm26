@@ -1304,6 +1304,10 @@ html.hide-pending .rd-fm .fm-row:not(:has(> .rd-ph)) { display: none; }
 .acg-lead .acr-lead { grid-column: auto; font-size: clamp(24px, 2.2vw, 34px); line-height: 1.22; letter-spacing: -.015em; }   /* sin columnas implícitas: el rótulo no se estrecha */
 .acg-ph { grid-column: 2; grid-row: 1 / span 3; margin: 0; padding: var(--s3); }
 .acg-stick { width: var(--pw); position: sticky; top: calc(var(--tabs-h, 150px) + var(--s3)); display: grid; gap: var(--s1); }   /* la imagen se queda fija mientras se recorre la columna izquierda */
+.acg-frame { position: relative; width: var(--pw); aspect-ratio: 1200 / 1579; overflow: hidden; }
+.acg-frame > [data-shot]:not(.is-on) { visibility: hidden; }
+.acg-badge { position: absolute; inset: 0; z-index: 1; border: 1px solid var(--rule-inv); background: #cbcdd3; }
+.acg-badge img { display: block; width: 100%; height: 100%; object-fit: cover; }   /* el paso 02 cambia la invitación por la acreditación física, con el barrido de la web */
 .acg-zoom { aspect-ratio: 1200 / 1579; width: var(--pw); overflow: hidden; border: 1px solid var(--rule-inv); }   /* el móvil entero, sin recorte, cabe bajo las pestañas */
 .acg-zoom img { width: 100%; height: 100%; object-fit: contain; border: 0 !important; }
 .acg-stick figcaption { color: var(--sky); }
@@ -1344,6 +1348,7 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
   .bgrid.acg { --pw: 100%; grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
   .acg-lead, .acg-ph, .acg-step { grid-column: 1; grid-row: auto !important; }
   .acg-stick { position: static; }
+  .acg-frame > .acg-zoom { visibility: visible !important; } .acg-badge, .acg-frame .lk-wipe { display: none; } .acg-ph .lk-cap span[data-k="0"] { opacity: 1; } .acg-ph .lk-cap span[data-k="1"] { display: none; }   /* móvil: arriba la invitación; la acreditación va bajo el paso 02 */
   .acg-step { grid-template-columns: 44px minmax(0, 1fr); column-gap: var(--s2); padding: var(--s3) var(--s2) var(--s4); }
   .acg-n { width: 44px; height: 44px; font-size: 24px; } .acg-ln { top: 44px; bottom: calc(-1 * var(--s4) - var(--s3) - 1px); }
   .acg-art { display: none; }
@@ -1647,7 +1652,7 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
         <div class="iv-bh"><span class="label">02 · Acreditación digital y control de accesos</span></div>
         <div class="bgrid acg" data-xgrid>
           <div class="bc acg-lead"><p class="label">¿Cómo funciona?</p><p class="acr-lead">Proponemos una forma sencilla de gestionar la entrada y la información de los asistentes: todo en el móvil y sin instalar ninguna aplicación.</p></div>
-          <figure class="bc acg-ph"><div class="acg-stick"><button class="seq-zoom acg-zoom" type="button" aria-haspopup="dialog" aria-controls="acrBox" aria-label="Ver la invitación a pantalla completa"><img src="img/lm26-invitacion-movil.webp" width="1200" height="1579" decoding="async" loading="lazy" alt="Mockup de la invitación del Leadership Meeting 2026 en un móvil: pase en PDF, Apple Wallet, número de identificación y alojamiento"><span class="acr-x" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7"/></svg></span></button><figcaption class="label">Propuesta · invitación del Leadership Meeting 2026</figcaption></div></figure>
+          <figure class="bc acg-ph"><div class="acg-stick"><div class="acg-frame"><button class="seq-zoom acg-zoom is-on" data-shot data-k="0" type="button" aria-haspopup="dialog" aria-controls="acrBox" aria-label="Ver la invitación a pantalla completa"><img src="img/lm26-invitacion-movil.webp" width="1200" height="1579" decoding="async" loading="lazy" alt="Mockup de la invitación del Leadership Meeting 2026 en un móvil: pase en PDF, Apple Wallet, número de identificación y alojamiento"><span class="acr-x" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7"/></svg></span></button><div class="acg-badge" data-shot data-k="1"><img src="img/lm26-acreditacion.webp" width="1122" height="1402" decoding="async" loading="lazy" alt="Mockup de la acreditación del Leadership Meeting 2026 con lanyard: nombre del asistente y su número"></div><div class="lk-wipe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><figcaption class="label lk-cap"><span class="is-on" data-shot data-k="0">Propuesta · invitación del Leadership Meeting 2026</span><span data-shot data-k="1">Mockup · Acreditación y lanyard</span></figcaption></div></figure>
           <article class="bc acg-step" data-k="0">
             <div class="acg-mk"><span class="acg-n">01</span><i class="acg-ln" aria-hidden="true"></i></div>
             <div class="acg-body"><p class="label">Por email</p><div class="acg-hd"><h3 class="display">Invitación digital</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 5h8v8H5z"/><path d="M19 5h8v8h-8z"/><path d="M5 19h8v8H5z"/><path d="M8 8h2v2H8z"/><path d="M22 8h2v2h-2z"/><path d="M8 22h2v2H8z"/><path d="M19 19h3v3h-3z"/><path d="M24 24h3v3h-3z"/><path d="M19 27h2M27 19v2"/></svg></i></div><div class="acg-tx"><p>Cada asistente recibe su invitación digital por email.</p><p>Es un código personal que puede guardar en el móvil, en su cartera digital (Apple Wallet o Google Wallet) o descargar en PDF.</p><p>El mismo email incluye la agenda, el plano de llegada y los datos del alojamiento.</p></div></div>
@@ -1655,7 +1660,7 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
           </article>
           <article class="bc acg-step" data-k="1">
             <div class="acg-mk"><span class="acg-n">02</span></div>
-            <div class="acg-body"><p class="label">El día del evento</p><div class="acg-hd"><h3 class="display">Controlamos el acceso</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 6h16v12H8z"/><path d="M16 18v8"/><path d="M10 26h12"/><path d="M3 12h26"/></svg></i></div><div class="acg-tx"><p>El día del evento, al escanear el QR se valida la entrada.</p><p>Podemos ver a través de un panel quién ha llegado, y se evitan duplicidades y accesos no autorizados.</p><p>Este mismo sistema puede usarse para el servicio de guardarropía.</p></div></div>
+            <div class="acg-body"><p class="label">El día del evento</p><div class="acg-hd"><h3 class="display">Controlamos el acceso</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 6h16v12H8z"/><path d="M16 18v8"/><path d="M10 26h12"/><path d="M3 12h26"/></svg></i></div><div class="acg-tx"><p>El día del evento, al escanear el QR se valida la entrada.</p><p>Podemos ver a través de un panel quién ha llegado, y se evitan duplicidades y accesos no autorizados.</p><p>Este mismo sistema puede usarse para el servicio de guardarropía.</p></div><figure class="lk-mini"><img src="img/lm26-acreditacion.webp" width="1122" height="1402" decoding="async" loading="lazy" alt="Mockup de la acreditación del Leadership Meeting 2026 con lanyard: nombre del asistente y su número"><figcaption class="label">Mockup · Acreditación y lanyard</figcaption></figure></div>
             <div class="acg-art" aria-hidden="true"><svg viewBox="0 0 400 400"><rect x="60" y="110" width="120" height="90"/><path d="M120 200 V320 M70 320 H170"/><path d="M80 135 H160 M80 155 H140"/><path class="scan" d="M40 172 H200"/><path d="M230 120 H350 V250 H230 Z"/><path d="M230 148 H350"/><path d="M248 172 l6 6 l12 -12 M276 172 H330 M248 198 l6 6 l12 -12 M276 198 H322 M248 224 H262 M276 224 H316"/><path d="M290 250 V286 M262 286 H318"/><path d="M40 340 H360"/></svg></div>
           </article>
         </div>
@@ -1695,7 +1700,7 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
         <div class="iv-bh"><span class="label">04 · Activación en el coffee break</span></div>
         <div class="bgrid acg acg-lk" data-xgrid>
           <div class="bc acg-lead"><p class="label">22 de diciembre · Lotería de Navidad</p><h3 class="lk-t display">The Lucky Number</h3><p class="acr-lead">La Lotería de Navidad es una de las tradiciones más arraigadas en España. Como el encuentro se celebra el mismo día del sorteo, el 22 de diciembre, proponemos compartir esta costumbre con los asistentes internacionales mediante un sorteo propio de Gestamp durante el coffee break.</p></div>
-          <figure class="bc acg-ph lk-ph"><div class="acg-stick"><div class="lk-shot"><img src="img/lucky-qr.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con dos pantallas: QR «Scan &amp; play» y número de la suerte 28624" data-k="0" class="is-on"><img src="img/lucky-cuenta.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con la cuenta atrás del sorteo y el aviso para tener el número preparado" data-k="1"><img src="img/lucky-ganador.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con el número ganador 28624 en las dos pantallas" data-k="2"><div class="lk-wipe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><figcaption class="label lk-cap"><span data-k="0" class="is-on">Fotomontaje · Escanea y recibe tu número</span><span data-k="1">Fotomontaje · Cuenta atrás del sorteo</span><span data-k="2">Fotomontaje · Número ganador</span></figcaption></div></figure>
+          <figure class="bc acg-ph lk-ph"><div class="acg-stick"><div class="lk-shot"><img data-shot src="img/lucky-qr.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con dos pantallas: QR «Scan &amp; play» y número de la suerte 28624" data-k="0" class="is-on"><img data-shot src="img/lucky-cuenta.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con la cuenta atrás del sorteo y el aviso para tener el número preparado" data-k="1"><img data-shot src="img/lucky-ganador.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con el número ganador 28624 en las dos pantallas" data-k="2"><div class="lk-wipe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><figcaption class="label lk-cap"><span data-shot data-k="0" class="is-on">Fotomontaje · Escanea y recibe tu número</span><span data-shot data-k="1">Fotomontaje · Cuenta atrás del sorteo</span><span data-shot data-k="2">Fotomontaje · Número ganador</span></figcaption></div></figure>
           <article class="bc acg-step" data-k="0">
             <div class="acg-mk"><span class="acg-n">01</span><i class="acg-ln" aria-hidden="true"></i></div>
             <div class="acg-body"><p class="label">Con el móvil</p><div class="acg-hd"><h3 class="display">Escanea el QR</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 5h8v8H5z"/><path d="M19 5h8v8h-8z"/><path d="M5 19h8v8H5z"/><path d="M8 8h2v2H8z"/><path d="M22 8h2v2h-2z"/><path d="M8 22h2v2H8z"/><path d="M19 19h3v3h-3z"/><path d="M24 24h3v3h-3z"/><path d="M19 27h2M27 19v2"/></svg></i></div><div class="acg-tx"><p>Escanean un QR y acceden a una web en español e inglés, sin descargar ninguna app.</p></div><figure class="lk-mini"><img src="img/lucky-qr.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con dos pantallas: QR «Scan &amp; play» y número de la suerte 28624"><figcaption class="label">Fotomontaje · Escanea y recibe tu número</figcaption></figure></div>
@@ -3208,10 +3213,11 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
       var i = el.tagName === "IMG" ? el : $("img", el); if (!i) return;
       im.src = i.currentSrc || i.src; im.alt = i.alt || "";
       var f = el.closest("figure"), fc = f && f.querySelector(":scope > figcaption, .acg-stick > figcaption");
-      cap.textContent = fc ? fc.textContent.replace(/\s+/g, " ").trim() : "";
+      var fon = fc && fc.querySelector(".is-on");   /* pie con varias versiones: la del paso activo */
+      cap.textContent = fc ? (fon || fc).textContent.replace(/\s+/g, " ").trim() : "";
       from = el; box.showModal(); if (lenis) lenis.stop();
     }
-    $$(".photo, .idg-kv img, .idg-v img, .a4-pair img, .rd-fm .plan, .acg-shot img, .lk-shot img, .lk-mini img").forEach(function (el) {
+    $$(".photo, .idg-kv img, .idg-v img, .a4-pair img, .rd-fm .plan, .acg-shot img, .lk-shot img, .lk-mini img, .acg-badge img").forEach(function (el) {
       if (el.closest(".hero")) return;
       var i = el.tagName === "IMG" ? el : $("img", el);
       el.classList.add("zoomable");
@@ -4152,7 +4158,7 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
 
   /* ---------- Acreditación: el tiempo que se lee se marca en blanco y el trazo 01 → 02 se tiende con el scroll ---------- */
   $$(".acg").forEach(function (g) {
-    var st = $$(".acg-step", g), shots = $$(".lk-shot img, .lk-cap span", g), bands = $$(".lk-wipe > span", g), curK = "0", wtl = null;
+    var st = $$(".acg-step", g), shots = $$("[data-shot]", g), bands = $$(".lk-wipe > span", g), curK = "0", wtl = null;
     function swap(k) { shots.forEach(function (el) { el.classList.toggle("is-on", el.dataset.k === k); }); }
     /* la imagen fija acompaña al paso activo: el barrido de la web la tapa, se cambia debajo y se destapa */
     function show(k) {
