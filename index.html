@@ -1233,8 +1233,12 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 /* filas justificadas: cada pieza crece en proporción a su formato (--ar, ancho/alto en número), así todas las de una fila comparten alto
    y se ven enteras, sin recorte; los huecos pendientes llevan un formato provisional hasta tener la imagen */
 .rd-fm { display: grid; gap: 8px; }
-.rd-fm .fm-row { display: flex; gap: 8px; align-items: flex-start; }
-.rd-fm .fm-row > * { flex: var(--ar) 1 0%; min-width: 0; margin: 0; }
+.rd-fm .fm-row { display: flex; flex-direction: column; gap: 8px; align-items: center; }   /* una imagen por fila, entera y a todo el ancho */
+.rd-fm .fm-row > * { flex: none; width: 100%; min-width: 0; margin: 0; }
+.rd-fm .fm-row > .fm-tall { width: min(100%, calc(82svh * var(--ar))); }   /* las verticales, a la altura de pantalla */
+.rd-fm .fm-pair { flex-direction: row; align-items: flex-start; }   /* pareja en una fila: cada pieza crece según su formato y ambas comparten alto */
+.rd-fm .fm-pair > *, .rd-fm .fm-pair > .fm-tall { flex: var(--ar) 1 0%; width: auto; }
+@media (max-width: 560px) { .rd-fm .fm-pair { flex-direction: column; align-items: center; } .rd-fm .fm-pair > * { flex: none; width: 100%; } .rd-fm .fm-pair > .fm-tall { width: min(100%, calc(82svh * var(--ar))); } }
 .rd-fm .rd-ph { position: relative; display: block; }
 .rd-fm .rd-ph .photo { aspect-ratio: var(--ar); }
 .rd-fm .rd-ph figcaption { position: absolute; z-index: 3; left: 0; bottom: 0; padding: 6px 10px; background: var(--deep); color: var(--sky); pointer-events: none; }
@@ -1242,8 +1246,6 @@ html.hide-pending .all-pending, html.hide-pending .nav-pend, html.hide-pending .
 .rd-fm .plan img { display: block; width: 100%; height: 100%; }
 html.hide-pending .rd-fm .fm-row:not(:has(> .rd-ph)) { display: none; }
 @media (max-width: 560px) {
-  .rd-fm .fm-row { flex-direction: column; align-items: stretch; }
-  .rd-fm .fm-row > * { flex: none; }
 }
 /* ---------- Selectores de pasos: cifra y rótulo recortados a su altura de mayúscula, sobre la misma línea base y centrados en la caja ---------- */
 /* ---------- Cabecera de sección: número Bebas Thin y nombre Bebas a tamaño de titular, sobre el filete; el código, a la derecha ---------- */
@@ -1347,6 +1349,37 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
   .acg-art { display: none; }
   .acg-lead { padding: var(--s3) var(--s2) var(--s4); }
   .acg-ph { padding: var(--s2); }
+}
+/* ---------- Madnum · 04 Activación «The Lucky Number»: misma estructura que la acreditación; la imagen fija cambia con el paso activo ---------- */
+.bgrid.acg-lk { --pw: min(50vw, calc((100svh - var(--tabs-h, 150px) - 150px) * 1672 / 941)); }
+.acg-lk .acg-ph { grid-row: 1 / span 5; }
+.acg-lk .acg-step { grid-template-columns: 56px minmax(0, 1fr); }
+.acg-lk .acg-step[data-k="2"] { grid-row: 4; }
+.lk-t { font-size: var(--h2); line-height: .9; }
+.lk-shot { position: relative; width: var(--pw); aspect-ratio: 1672 / 941; overflow: hidden; border: 1px solid var(--rule-inv); background: var(--deep); }
+.lk-shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; visibility: hidden; pointer-events: none; }
+.lk-shot img.is-on { visibility: visible; pointer-events: auto; }
+/* barrido de la web dentro del marco: franjas que suben, se cambia la foto tapada y se retiran hacia arriba */
+.lk-wipe { position: absolute; inset: 0; z-index: 2; display: grid; grid-template-columns: repeat(8, 1fr); pointer-events: none; }
+.lk-wipe > span { background: #01426a; transform: scaleY(0); transform-origin: 50% 100%; }
+.lk-cap { position: relative; color: var(--sky); min-height: 1.45em; }
+.lk-cap span { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity .4s var(--out); }
+.lk-cap span.is-on { opacity: 1; }
+.lk-mini { display: none; }
+.lk-sum { grid-column: 1; grid-row: 5; padding: var(--s4) var(--s3) var(--s5); display: grid; gap: var(--s3); }
+.lk-stats { display: flex; gap: var(--s5); }
+.lk-stats { justify-content: flex-start; }
+.lk-stats p { display: grid; gap: var(--s1); justify-items: start; text-align: left; margin: 0; }
+.lk-stats b { font-family: var(--display); font-weight: 100; font-size: clamp(72px, 6vw, 104px); line-height: .8; color: #fff; }
+.lk-stats .label { color: var(--sky); }
+.lk-close { font-size: clamp(17px, 1.3vw, 21px); line-height: 1.45; color: #fff; max-width: 30em; }
+@media (max-width: 860px) {
+  .acg-lk .acg-ph { display: none; }
+  .lk-mini { display: grid; gap: var(--s1); margin: var(--s2) 0 0; }
+  .lk-mini img { display: block; width: 100%; height: auto; border: 1px solid var(--rule-inv); }
+  .lk-mini figcaption { color: var(--sky); }
+  .lk-sum { grid-row: auto; padding: var(--s3) var(--s2) var(--s4); }
+  .acg-lk .acg-step { grid-template-columns: 44px minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
 </style>
@@ -1633,21 +1666,49 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
         <div class="rd-fm">
           <div class="fm-row">
             <figure class="rd-ph" style="--ar: 1.7768"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-acceso.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje del acceso exterior de Madnum con tótem de bienvenida y tótem de señalética del Leadership Meeting 2026"></div><figcaption class="label">Fotomontaje · Acceso exterior</figcaption></figure>
+          </div>
+          <div class="fm-row">
             <figure class="rd-ph" style="--ar: 2.6667"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-entrada.webp" width="2048" height="768" decoding="async" loading="lazy" alt="Fotomontaje de la entrada de Madnum con el logotipo LM 2026 en el cristal, tótem de señalética y panel del Leadership Meeting 2026"></div><figcaption class="label">Fotomontaje · Entrada</figcaption></figure>
           </div>
           <div class="fm-row">
             <figure class="rd-ph" style="--ar: 1.6619"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-registro.webp" width="1617" height="973" decoding="async" loading="lazy" alt="Fotomontaje del registro de Madnum: mostrador A–L y M–Z con pantalla del Leadership Meeting 2026 junto a la barra"></div><figcaption class="label">Fotomontaje · Registro</figcaption></figure>
-            <figure class="rd-ph" style="--ar: 1.7768"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-sala.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala del coffee break de Madnum con dos pantallas del Leadership Meeting 2026 y árbol de Navidad"></div><figcaption class="label">Fotomontaje · Sala del coffee break</figcaption></figure>
-            <figure class="rd-ph" style="--ar: 0.7819"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-vinilo.webp" width="1086" height="1389" decoding="async" loading="lazy" alt="Fotomontaje del camino exterior de Madnum con vinilo de suelo que dirige al auditorio"></div><figcaption class="label">Fotomontaje · Vinilo</figcaption></figure>
           </div>
           <div class="fm-row">
+            <figure class="rd-ph" style="--ar: 1.7768"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-sala.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala del coffee break de Madnum con dos pantallas del Leadership Meeting 2026 y árbol de Navidad"></div><figcaption class="label">Fotomontaje · Sala del coffee break</figcaption></figure>
+          </div>
+          <div class="fm-row fm-pair">
+            <figure class="rd-ph fm-tall" style="--ar: 0.7819"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-vinilo.webp" width="1086" height="1389" decoding="async" loading="lazy" alt="Fotomontaje del camino exterior de Madnum con vinilo de suelo que dirige al auditorio"></div><figcaption class="label">Fotomontaje · Vinilo</figcaption></figure>
             <figure class="rd-ph" style="--ar: 1.3333"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-auditorio.webp" width="1448" height="1086" decoding="async" loading="lazy" alt="Fotomontaje de la entrada al auditorio de Madnum con pantalla LM 2026 y tótem de bienvenida"></div><figcaption class="label">Fotomontaje · Entrada al auditorio</figcaption></figure>
+          </div>
+          <div class="fm-row">
             <figure class="rd-ph" style="--ar: 1.8194"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-vestibulo.webp" width="1692" height="930" decoding="async" loading="lazy" alt="Fotomontaje del vestíbulo de Madnum con tótem de bienvenida, pantalla del Leadership Meeting 2026 y árbol de Navidad"></div><figcaption class="label">Fotomontaje · Vestíbulo y árbol de Navidad</figcaption></figure>
           </div>
           <div class="fm-row">
             <figure class="rd-ph" style="--ar: 1.6273"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-render-auditorio.webp" width="2000" height="1229" decoding="async" loading="lazy" alt="Render del auditorio de Madnum con la pantalla del Leadership Meeting 2026, atril y frontal de escenario iluminado"></div><figcaption class="label">Render · Auditorio</figcaption></figure>
+          </div>
+          <div class="fm-row">
             <figure class="rd-ph fm-plan" style="--ar: 1.9787"><a class="plan" href="img/madnum-plano-auditorio.webp" target="_blank" rel="noopener"><img src="img/madnum-plano-auditorio.webp" width="1488" height="752" decoding="async" loading="lazy" alt="Plano de escenografía del auditorio de Madnum: pantalla de 6,40 × 3,40 m y frontal de escenario con el rótulo Leadership Meeting 2026 de 3,65 m"></a><figcaption class="label">Plano · Escenografía del auditorio</figcaption></figure>
           </div>
+                </div>
+      </div>
+      <div class="container iv-block iv-lucky">
+        <div class="iv-bh"><span class="label">04 · Activación en el coffee break</span></div>
+        <div class="bgrid acg acg-lk" data-xgrid>
+          <div class="bc acg-lead"><p class="label">22 de diciembre · Lotería de Navidad</p><h3 class="lk-t display">The Lucky Number</h3><p class="acr-lead">La Lotería de Navidad es una de las tradiciones más arraigadas en España. Como el encuentro se celebra el mismo día del sorteo, el 22 de diciembre, proponemos compartir esta costumbre con los asistentes internacionales mediante un sorteo propio de Gestamp durante el coffee break.</p></div>
+          <figure class="bc acg-ph lk-ph"><div class="acg-stick"><div class="lk-shot"><img src="img/lucky-qr.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con dos pantallas: QR «Scan &amp; play» y número de la suerte 28624" data-k="0" class="is-on"><img src="img/lucky-cuenta.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con la cuenta atrás del sorteo y el aviso para tener el número preparado" data-k="1"><img src="img/lucky-ganador.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con el número ganador 28624 en las dos pantallas" data-k="2"><div class="lk-wipe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><figcaption class="label lk-cap"><span data-k="0" class="is-on">Fotomontaje · Escanea y recibe tu número</span><span data-k="1">Fotomontaje · Cuenta atrás del sorteo</span><span data-k="2">Fotomontaje · Número ganador</span></figcaption></div></figure>
+          <article class="bc acg-step" data-k="0">
+            <div class="acg-mk"><span class="acg-n">01</span><i class="acg-ln" aria-hidden="true"></i></div>
+            <div class="acg-body"><p class="label">Con el móvil</p><div class="acg-hd"><h3 class="display">Escanea el QR</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 5h8v8H5z"/><path d="M19 5h8v8h-8z"/><path d="M5 19h8v8H5z"/><path d="M8 8h2v2H8z"/><path d="M22 8h2v2h-2z"/><path d="M8 22h2v2H8z"/><path d="M19 19h3v3h-3z"/><path d="M24 24h3v3h-3z"/><path d="M19 27h2M27 19v2"/></svg></i></div><div class="acg-tx"><p>Escanean un QR y acceden a una web en español e inglés, sin descargar ninguna app.</p></div><figure class="lk-mini"><img src="img/lucky-qr.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con dos pantallas: QR «Scan &amp; play» y número de la suerte 28624"><figcaption class="label">Fotomontaje · Escanea y recibe tu número</figcaption></figure></div>
+          </article>
+          <article class="bc acg-step" data-k="1">
+            <div class="acg-mk"><span class="acg-n">02</span><i class="acg-ln" aria-hidden="true"></i></div>
+            <div class="acg-body"><p class="label">Al instante</p><div class="acg-hd"><h3 class="display">Recibe tu número</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 9h24v4a3 3 0 0 0 0 6v4H4v-4a3 3 0 0 0 0-6z"/><path d="M20 9v14" stroke-dasharray="2 3"/><path d="M9 16h7"/></svg></i></div><div class="acg-tx"><p>Reciben su número de cinco cifras, con la identidad del Leadership Meeting 2026.</p></div><figure class="lk-mini"><img src="img/lucky-cuenta.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con la cuenta atrás del sorteo y el aviso para tener el número preparado"><figcaption class="label">Fotomontaje · Cuenta atrás del sorteo</figcaption></figure></div>
+          </article>
+          <article class="bc acg-step" data-k="2">
+            <div class="acg-mk"><span class="acg-n">03</span></div>
+            <div class="acg-body"><p class="label">En las pantallas</p><div class="acg-hd"><h3 class="display">Sigue el sorteo</h3><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M3 7h12v9H3z"/><path d="M17 7h12v9H17z"/><path d="M9 16v4M23 16v4M6 20h20"/><path d="M16 23l1.4 2.8 3.1.4-2.2 2.2.5 3.1-2.8-1.5-2.8 1.5.5-3.1-2.2-2.2 3.1-.4z"/></svg></i></div><div class="acg-tx"><p>Siguen el sorteo en las pantallas y descubren los números premiados.</p></div><figure class="lk-mini"><img src="img/lucky-ganador.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con el número ganador 28624 en las dos pantallas"><figcaption class="label">Fotomontaje · Número ganador</figcaption></figure></div>
+          </article>
+          <div class="bc lk-sum"><div class="lk-stats"><p><b>7</b><span class="label">Minutos de activación</span></p><p><b>260</b><span class="label">Directivos</span></p></div><p class="lk-close">Con premios vinculados a la experiencia.</p></div>
         </div>
       </div>
       <div class="container iv-next"><button class="iv-jump" type="button" data-go="rft"><span class="label">Siguiente sede · B</span><span class="ij-n display">Real Fábrica de Tapices</span><i aria-hidden="true">→</i></button></div>
@@ -1723,10 +1784,12 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
         <div class="rd-fm">
           <div class="fm-row">
             <figure class="rd-ph" style="--ar: 1.3336"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/rft-fm-acceso.webp" width="1447" height="1085" decoding="async" loading="lazy" alt="Fotomontaje del acceso principal a la Real Fábrica de Tapices con el tótem de bienvenida del Leadership Meeting 2026"></div><figcaption class="label">Fotomontaje · Acceso principal</figcaption></figure>
-            <figure class="rd-ph" style="--ar: 1.7768"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/rft-fm-goya.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje del jardín de la Real Fábrica de Tapices con el tótem que indica Sala Goya hacia arriba"></div><figcaption class="label">Fotomontaje · Camino a Sala Goya</figcaption></figure>
-            <figure class="rd-ph" style="--ar: 0.75"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/rft-totem-aseos.webp" width="1086" height="1448" decoding="async" loading="lazy" alt="Mockup del tótem de aseos del Leadership Meeting 2026 en la Real Fábrica de Tapices"></div><figcaption class="label">Mockup · Tótem de aseos</figcaption></figure>
           </div>
-        </div>
+          <div class="fm-row fm-pair">
+            <figure class="rd-ph" style="--ar: 1.7768"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/rft-fm-goya.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje del jardín de la Real Fábrica de Tapices con el tótem que indica Sala Goya hacia arriba"></div><figcaption class="label">Fotomontaje · Camino a Sala Goya</figcaption></figure>
+            <figure class="rd-ph fm-tall" style="--ar: 0.75"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/rft-totem-aseos.webp" width="1086" height="1448" decoding="async" loading="lazy" alt="Mockup del tótem de aseos del Leadership Meeting 2026 en la Real Fábrica de Tapices"></div><figcaption class="label">Mockup · Tótem de aseos</figcaption></figure>
+          </div>
+                </div>
       </div>
       <div class="container iv-next"><button class="iv-jump" type="button" data-go="madnum"><span class="label">Sede anterior · A</span><span class="ij-n display">Madnum</span><i aria-hidden="true">←</i></button></div>
     </div>
@@ -1800,7 +1863,7 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
           <section class="bc org-dep" aria-label="Producción"><p class="org-pill label">Producción</p><div class="ogp ogp-lead"><span class="ogp-av" aria-hidden="true"><img src="img/org/jesus-tenorio.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Jesús Tenorio</p><p class="ogp-r">Director de Producción</p></div></div><svg class="org-ar" viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M3 16l5 5 5-5"/></svg><div class="org-mem"><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/raul-del-valle.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Raúl del Valle</p><p class="ogp-r">Carpintería</p></div></div><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/mercedes-osborne.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Mercedes Osborne</p><p class="ogp-r">Audiovisual</p></div></div><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/m-angel-alonso.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">M. Ángel Alonso</p><p class="ogp-r">Impresión</p></div></div></div></section>
           <section class="bc org-dep" aria-label="Creatividad"><p class="org-pill label">Creatividad</p><div class="ogp ogp-lead"><span class="ogp-av" aria-hidden="true"><img src="img/org/j-manuel-nicolas.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">J. Manuel Nicolás</p><p class="ogp-r">Dir. Creativo Ejecutivo</p></div></div><svg class="org-ar" viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M3 16l5 5 5-5"/></svg><div class="org-mem"><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/eduardo-gonzalez.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Eduardo González</p><p class="ogp-r">Dirección de Arte</p></div></div></div></section>
           <section class="bc org-dep" aria-label="Diseño espacial"><p class="org-pill label">Diseño espacial</p><div class="ogp ogp-lead"><span class="ogp-av" aria-hidden="true"><img src="img/org/nuria-gonzalez.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Nuria González</p><p class="ogp-r">Directora Arquitectura Efímera</p></div></div><svg class="org-ar" viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M3 16l5 5 5-5"/></svg><div class="org-mem"><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/carlos-blanca.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Carlos Blanca</p><p class="ogp-r">Diseño 3D</p></div></div><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/laura-ortega.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Laura Ortega</p><p class="ogp-r">Planimetría</p></div></div></div></section>
-          <section class="bc org-dep" aria-label="Contenidos"><p class="org-pill label">Contenidos</p><div class="ogp ogp-lead"><span class="ogp-av" aria-hidden="true"><img src="img/org/alberto-munoz.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Alberto Muñoz</p><p class="ogp-r">Contenido Audiovisual</p></div></div><svg class="org-ar" viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M3 16l5 5 5-5"/></svg><div class="org-mem"><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/ana-martinez.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Ana Martínez</p><p class="ogp-r">Edición de Vídeo</p></div></div><div class="ogp"><span class="ogp-av" aria-hidden="true">GB</span><div class="ogp-t"><p class="ogp-n">Guillermo Bilbao</p><p class="ogp-r">Regidor</p></div></div></div></section>
+          <section class="bc org-dep" aria-label="Contenidos"><p class="org-pill label">Contenidos</p><div class="ogp ogp-lead"><span class="ogp-av" aria-hidden="true"><img src="img/org/alberto-munoz.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Alberto Muñoz</p><p class="ogp-r">Contenido Audiovisual</p></div></div><svg class="org-ar" viewBox="0 0 16 24" aria-hidden="true"><path d="M8 2v19M3 16l5 5 5-5"/></svg><div class="org-mem"><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/ana-martinez.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Ana Martínez</p><p class="ogp-r">Edición de Vídeo</p></div></div><div class="ogp"><span class="ogp-av" aria-hidden="true"><img src="img/org/guillermo-bilbao.webp" width="256" height="256" alt="" loading="lazy" decoding="async"></span><div class="ogp-t"><p class="ogp-n">Guillermo Bilbao</p><p class="ogp-r">Regidor</p></div></div></div></section>
         </div>
       </div>
       <div class="cred" data-cred data-n="18">
@@ -3148,7 +3211,7 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
       cap.textContent = fc ? fc.textContent.replace(/\s+/g, " ").trim() : "";
       from = el; box.showModal(); if (lenis) lenis.stop();
     }
-    $$(".photo, .idg-kv img, .idg-v img, .a4-pair img, .rd-fm .plan, .acg-shot img").forEach(function (el) {
+    $$(".photo, .idg-kv img, .idg-v img, .a4-pair img, .rd-fm .plan, .acg-shot img, .lk-shot img, .lk-mini img").forEach(function (el) {
       if (el.closest(".hero")) return;
       var i = el.tagName === "IMG" ? el : $("img", el);
       el.classList.add("zoomable");
@@ -4089,10 +4152,21 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
 
   /* ---------- Acreditación: el tiempo que se lee se marca en blanco y el trazo 01 → 02 se tiende con el scroll ---------- */
   $$(".acg").forEach(function (g) {
-    var st = $$(".acg-step", g);
+    var st = $$(".acg-step", g), shots = $$(".lk-shot img, .lk-cap span", g), bands = $$(".lk-wipe > span", g), curK = "0", wtl = null;
+    function swap(k) { shots.forEach(function (el) { el.classList.toggle("is-on", el.dataset.k === k); }); }
+    /* la imagen fija acompaña al paso activo: el barrido de la web la tapa, se cambia debajo y se destapa */
+    function show(k) {
+      if (k === curK) return; curK = k;
+      if (!bands.length || !motion) { swap(k); return; }
+      if (wtl) wtl.kill();
+      wtl = gsap.timeline()
+        .to(bands, { scaleY: 1, transformOrigin: "50% 100%", duration: .22, ease: EASE.in, stagger: { each: .012, from: "start" } })
+        .add(function () { swap(curK); })
+        .to(bands, { scaleY: 0, transformOrigin: "50% 0%", duration: .26, ease: EASE.out, stagger: { each: .012, from: "start" } });   /* rápido: ~0,6 s en total */
+    }
     if (!motion) { st.forEach(function (s) { s.classList.add("is-on"); var l = $(".acg-ln", s); if (l) l.style.setProperty("--p", 1); }); return; }
     st.forEach(function (s) {
-      ScrollTrigger.create({ trigger: s, start: "top 62%", end: "bottom 62%", toggleClass: { targets: s, className: "is-on" } });
+      ScrollTrigger.create({ trigger: s, start: "top 62%", end: "bottom 62%", toggleClass: { targets: s, className: "is-on" }, onToggle: function (x) { if (x.isActive) show(s.dataset.k); } });
       var l = $(".acg-ln", s); if (l) scrub(s, "top 62%", "bottom 62%", 1).fromTo(l, { "--p": 0 }, { "--p": 1, ease: "none" });   /* cada tramo del trazo une un paso con el siguiente */
     });
   });
