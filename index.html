@@ -76,10 +76,10 @@ h1, h2, h3, p, dl, dd, ol, ul, figure { margin: 0; }
 /* ---------- Intro ---------- */
 .intro { position: fixed; inset: 0; z-index: 100; display: none; background: var(--paper); color: var(--ink); }
 .has-intro .intro { display: block; }
-.intro-guides { position: absolute; inset: 0; }
+.intro-guides { position: absolute; inset: 0; pointer-events: none; }
 .intro-guides .grid { height: 100%; }
 .intro-guides i { border-left: 1px solid var(--rule-soft); transform-origin: 50% 0; }
-.intro-blocks { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, 1fr); }
+.intro-blocks { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, 1fr); pointer-events: none; }   /* las franjas del cierre van encima pero no capturan clics: «Saltar» tiene que poder pulsarse */
 .intro-blocks span { background: var(--ink); transform: scaleY(0); transform-origin: 50% 100%; }
 .intro-ui { position: absolute; inset: 0; display: grid; grid-template-rows: auto 1fr auto; padding-block: calc(var(--s3) + env(safe-area-inset-top, 0px)) calc(var(--s3) + env(safe-area-inset-bottom, 0px)); }
 .intro-top { display: flex; justify-content: space-between; align-items: center; gap: var(--s2); }
