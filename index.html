@@ -1386,6 +1386,61 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
   .lk-sum { grid-row: auto; padding: var(--s3) var(--s2) var(--s4); }
   .acg-lk .acg-step { grid-template-columns: 44px minmax(0, 1fr); }
 }
+/* guardarropa */
+.iv-wardrobe .bgrid { margin-top: 0; grid-template-rows: none; grid-auto-rows: auto; }
+.iv-wardrobe h4 { margin: 0; }
+/* A */
+.iv-wardrobe .gw-a { grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: auto auto; }
+.gw-lead { grid-column: 1 / span 7; grid-row: 1; padding: var(--s4) var(--s3) var(--s5); display: grid; gap: var(--s3); align-content: start; }
+.gw-lead .acr-lead { font-size: clamp(22px, 1.9vw, 30px); line-height: 1.25; letter-spacing: -.015em; }
+.gw-data { grid-column: 1 / span 7; grid-row: 2; padding: var(--s4) var(--s3) var(--s4); display: grid; gap: var(--s3); align-content: start; }
+.gw-badge { grid-column: 8 / span 5; grid-row: 1 / span 2; margin: 0; padding: 0; position: relative; overflow: hidden; min-height: 360px; }
+.gw-zoom { position: absolute; inset: 0; overflow: hidden; background: #ececec; container-type: size; }
+/* la tarjeta ocupa todo el alto de la celda (el gris del mockup se funde con el fondo) y con --z de 0 a 1 se amplía ×2,9
+   hasta encuadrar nombre y número de guardarropa, de canto a canto de la tarjeta (punto 440,975 de 1122×1402 al centro de la celda); sin JS, en el PDF y sin movimiento queda ampliada */
+.gw-zoom img { --z: 1; position: absolute; top: 0; left: calc(50% - 40cqh); width: 80cqh; height: 100cqh; max-width: none; display: block; transform-origin: 0 0; transform: translate(calc(var(--z) * -50.97cqh), calc(var(--z) * -151.67cqh)) scale(calc(1 + var(--z) * 1.9)); }
+.gw-badge figcaption { position: absolute; z-index: 2; left: 0; bottom: 0; padding: 8px 12px; background: var(--deep); color: var(--sky); pointer-events: none; }
+.gw-dh { display: flex; align-items: center; gap: 12px; } .gw-dh .ico { width: 28px; height: 28px; color: var(--sky); }
+.gw-p { font-size: 17px; line-height: 1.5; color: rgba(255, 255, 255, .88); max-width: 40em; }
+.gw-ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--s4); }
+.gw-ol li { display: grid; grid-template-columns: 40px 1fr; gap: var(--s2); align-items: baseline; padding: 12px 0; border-top: 1px solid var(--rule-inv); font-size: 17px; line-height: 1.35; }
+.gw-k { font-family: var(--display); font-size: 26px; color: var(--sky); line-height: 1; }
+/* B */
+.gw-sys { margin-top: var(--s7); }
+.gw-sh { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s3); row-gap: var(--s2); align-items: end; }
+.gw-sh .label { grid-column: 1 / -1; } .gw-t { grid-column: 1 / span 5; grid-row: 2 / span 2; font-size: var(--h2); align-self: start; }
+.gw-sh .gw-p { grid-column: 7 / span 6; }
+.gw-route { position: relative; height: 120px; margin-top: var(--s5); }
+.gw-num { position: absolute; left: 0; bottom: 30px; font-family: var(--display); font-weight: 100; font-size: 104px; line-height: .8; color: #fff; }
+.gw-line { position: absolute; left: 150px; right: 0; bottom: 44px; border-top: 2px solid #fff; }
+.gw-mk { position: absolute; bottom: 33px; width: 0; } .gw-mk i { position: absolute; left: -11px; bottom: 0; width: 22px; height: 22px; background: var(--deep); border: 2px solid #fff; }
+.gw-mk b { position: absolute; left: -11px; bottom: 32px; color: var(--sky); }
+.iv-wardrobe .gw-g { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: auto auto; }
+.gw-c { grid-row: span 2; padding: var(--s4) var(--s3) var(--s4); display: grid; grid-template-rows: subgrid; row-gap: var(--s3); align-content: start; }
+.gw-ch { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--s2); align-items: start; }
+.gw-ch .acg-n { background: #fff; border-color: #fff; color: #012c47; }
+.gw-ch h4 { font-size: var(--h3); line-height: .92; margin-top: 6px; } .gw-ch .ico { width: 34px; height: 34px; color: var(--sky); }
+.gw-venue { color: var(--sky); margin-top: 10px; }
+.gw-cx p { font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, .86); } .gw-cx p + p { margin-top: .8em; }
+/* C */
+.gw-adv { margin-top: var(--s7); display: grid; gap: var(--s3); }
+.gw-v { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.gw-ad { padding: var(--s4) var(--s3); display: grid; grid-template-columns: 36px minmax(0, 1fr); column-gap: var(--s2); row-gap: 10px; align-content: start; align-items: center; }
+.gw-ad p { grid-column: 2; }
+.gw-ad .ico { width: 36px; height: 36px; color: var(--sky); } .gw-ad h4 { font-size: 34px; line-height: .95; } .gw-ad p { font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, .86); }
+.gw-close { font-size: clamp(22px, 1.9vw, 30px); line-height: 1.3; letter-spacing: -.015em; max-width: 46em; margin-top: var(--s4); }
+.iv-wardrobe .ico svg { width: 100%; height: 100%; display: block; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 860px) {
+  .gw-lead, .gw-data, .gw-badge { grid-column: 1 / -1; grid-row: auto; }
+  .gw-badge { aspect-ratio: 4 / 3; min-height: 0; }
+  .gw-ol { grid-template-columns: 1fr; }
+  .gw-t, .gw-sh .gw-p { grid-column: 1 / -1; grid-row: auto; }
+  .gw-route { display: none; } .iv-wardrobe .gw-g { margin-top: var(--s4); }
+  .iv-wardrobe .gw-g, .gw-v { grid-template-columns: 1fr; grid-template-rows: none; } .gw-c { grid-row: auto; grid-template-rows: none; }
+  .gw-sys, .gw-adv { margin-top: var(--s6); }
+}
+.gw-line { transform-origin: 0 50%; }
+.gw-zoom { cursor: zoom-in; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
 </style>
 </head>
@@ -1651,7 +1706,7 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
       <div class="container iv-block iv-arrive">
         <div class="iv-bh"><span class="label">02 · Acreditación digital y control de accesos</span></div>
         <div class="bgrid acg" data-xgrid>
-          <div class="bc acg-lead"><p class="label">¿Cómo funciona?</p><p class="acr-lead">Proponemos una forma sencilla de gestionar la entrada y la información de los asistentes: todo en el móvil y sin instalar ninguna aplicación.</p></div>
+          <div class="bc acg-lead"><p class="label">¿Cómo funciona?</p><p class="acr-lead">Proponemos una forma sencilla de gestionar la entrada y la información de los asistentes: todo en el móvil y sin que el asistente instale nada.</p></div>
           <figure class="bc acg-ph"><div class="acg-stick"><div class="acg-frame"><button class="seq-zoom acg-zoom is-on" data-shot data-k="0" type="button" aria-haspopup="dialog" aria-controls="acrBox" aria-label="Ver la invitación a pantalla completa"><img src="img/lm26-invitacion-movil.webp" width="1200" height="1579" decoding="async" loading="lazy" alt="Mockup de la invitación del Leadership Meeting 2026 en un móvil: pase en PDF, Apple Wallet, número de identificación y alojamiento"><span class="acr-x" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7"/></svg></span></button><div class="acg-badge" data-shot data-k="1"><img src="img/lm26-acreditacion-v2.webp" width="1122" height="1402" decoding="async" loading="lazy" alt="Mockup de la acreditación del Leadership Meeting 2026: nombre del asistente y su número"></div><div class="lk-wipe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><figcaption class="label lk-cap"><span class="is-on" data-shot data-k="0">Propuesta · invitación del Leadership Meeting 2026</span><span data-shot data-k="1">Mockup · Acreditación</span></figcaption></div></figure>
           <article class="bc acg-step" data-k="0">
             <div class="acg-mk"><span class="acg-n">01</span><i class="acg-ln" aria-hidden="true"></i></div>
@@ -1666,8 +1721,37 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
         </div>
       </div>
 
+      <div class="container iv-block iv-wardrobe">
+        <div class="iv-bh"><span class="label">03 · Gestión digital e integrada del guardarropa</span></div>
+
+        <!-- A · qué es y la acreditación que lo hace posible -->
+        <div class="bgrid gw-a" data-xgrid>
+          <div class="bc gw-lead"><p class="label">¿Cómo funciona?</p>
+            <p class="acr-lead">Para garantizar una experiencia ágil y organizada durante toda la jornada, desarrollaremos una aplicación de gestión de asistentes que permitirá centralizar el control del guardarropa en los tres espacios del evento, utilizando un único número identificativo por participante.</p></div>
+          <figure class="bc gw-badge"><div class="gw-zoom"><img src="img/lm26-acreditacion-v2.webp" width="1122" height="1402" decoding="async" loading="lazy" alt="Acreditación del Leadership Meeting 2026"></div><figcaption class="label">Mockup · Acreditación</figcaption></figure>
+          <div class="bc gw-data"><div class="gw-dh"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M12 4l4 7 4-7"/><path d="M9 11h14v17H9z"/><path d="M12 15h4v4h-4z"/><path d="M18 16h3"/><path d="M12 22h8M12 25h5"/></svg></i><p class="label">En la acreditación</p></div>
+            <p class="gw-p">Durante el proceso de acreditación, cada asistente presentará su QR personal, recibido previamente, que permitirá imprimir automáticamente su acreditación con la siguiente información:</p>
+            <ol class="gw-ol"><li><span class="gw-k">01</span><span>Nombre y apellidos</span></li><li><span class="gw-k">02</span><span>Empresa</span></li><li><span class="gw-k">03</span><span>Número único de guardarropa, válido para los tres espacios</span></li><li><span class="gw-k">04</span><span>Número de mesa asignada para el almuerzo</span></li></ol></div>
+        </div>
+
+        <!-- B · un número, tres guardarropas -->
+        <div class="gw-sys">
+          <div class="gw-sh"><p class="label">Funcionamiento del sistema</p><h3 class="display gw-t">Un único número,<br>tres guardarropas</h3>
+            <p class="gw-p">El número de guardarropa asignado a cada participante se mantendrá durante toda la jornada, independientemente del espacio en el que se encuentre.</p>
+            <p class="gw-p">La aplicación permitirá al personal autorizado identificar al asistente, consultar su número de guardarropa y registrar los movimientos de sus pertenencias entre los diferentes puntos:</p></div>
+          <div class="gw-route" aria-hidden="true"><span class="gw-num">163</span><i class="gw-line"></i><span class="gw-mk" style="left:16.667%"><i></i><b class="label">G1</b></span><span class="gw-mk" style="left:50%"><i></i><b class="label">G2</b></span><span class="gw-mk" style="left:83.333%"><i></i><b class="label">G3</b></span></div>
+          <div class="bgrid gw-g" data-xgrid><article class="bc gw-c"><div class="gw-ch"><span class="acg-n">01</span><div><p class="label">Guardarropa 1</p><h4 class="display">Espacio de coffee break</h4><p class="label gw-venue">Madnum</p></div><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 12h16v8a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6z"/><path d="M22 14h2a3 3 0 0 1 0 6h-2"/><path d="M11 4c-1 1.5 1 2.5 0 4M15 4c-1 1.5 1 2.5 0 4"/></svg></i></div><div class="gw-cx"><p>A su llegada, los asistentes depositarán sus abrigos, que quedarán identificados mediante su número único de guardarropa.</p><p>El personal registrará digitalmente la recepción de cada prenda, vinculándola al perfil del participante.</p></div></article><article class="bc gw-c"><div class="gw-ch"><span class="acg-n">02</span><div><p class="label">Guardarropa 2</p><h4 class="display">Espacio de reunión</h4><p class="label gw-venue">Madnum</p></div><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 5h20v11H6z"/><path d="M3 22h26v4H3z"/><path d="M9 22v-4h4v4"/></svg></i></div><div class="gw-cx"><p>El traslado de los abrigos desde el Guardarropa 1 al Guardarropa 2 será gestionado íntegramente por el staff de beon. worldwide, sin necesidad de que los asistentes recojan o transporten sus pertenencias.</p><p>El equipo realizará el traslado de manera coordinada y actualizará en la aplicación la ubicación de cada prenda, garantizando su trazabilidad y disponibilidad en el nuevo espacio.</p></div></article><article class="bc gw-c"><div class="gw-ch"><span class="acg-n">03</span><div><p class="label">Guardarropa 3</p><h4 class="display">Espacio de almuerzo</h4><p class="label gw-venue">Real Fábrica de Tapices</p></div><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M9 4v8a3 3 0 0 0 6 0V4"/><path d="M12 4v24"/><path d="M23 4c-3.5 3-3.5 10 0 12v12"/></svg></i></div><div class="gw-cx"><p>En la Real Fábrica de Tapices, el sistema mantendrá el mismo número identificativo, permitiendo gestionar el depósito y la recogida de prendas sin generar nuevas referencias.</p><p>La aplicación facilitará al personal la consulta de la ubicación y el estado de las pertenencias de cada asistente, agilizando especialmente el servicio al finalizar el almuerzo.</p></div></article></div>
+        </div>
+
+        <!-- C · ventajas -->
+        <div class="gw-adv"><p class="label">Ventajas operativas</p>
+          <div class="bgrid gw-v" data-xgrid><article class="bc gw-ad"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 9h22v14H5z"/><path d="M9 14h6M9 18h4"/><path d="M19 13h4v6h-4z"/></svg></i><h4 class="display">Identificación única</h4><p>Un mismo número de guardarropa durante todo el evento.</p></article><article class="bc gw-ad"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 24a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M23 8a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M7 22V16a4 4 0 0 1 4-4h8a4 4 0 0 0 4-4"/><path d="M14 9l3 3-3 3"/></svg></i><h4 class="display">Trazabilidad digital</h4><p>Registro de entradas, movimientos y devoluciones de prendas.</p></article><article class="bc gw-ad"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 16h18"/><path d="M18 11l5 5-5 5"/><path d="M26 8v16"/></svg></i><h4 class="display">Experiencia sin interrupciones</h4><p>El traslado entre los guardarropas 1 y 2 se realiza sin intervención de los asistentes.</p></article><article class="bc gw-ad"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M18 3L8 18h7l-2 11 11-16h-7z"/></svg></i><h4 class="display">Mayor agilidad</h4><p>Identificación inmediata mediante la acreditación personal.</p></article><article class="bc gw-ad"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 6h24v15H4z"/><path d="M16 21v5M11 26h10"/><path d="M8 16l4-4 3 3 5-6 4 4"/></svg></i><h4 class="display">Control centralizado</h4><p>El staff podrá consultar en tiempo real la ubicación y el estado de las prendas.</p></article><article class="bc gw-ad"><i class="ico" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4l10 4v7c0 6-4.5 11-10 13C10.5 26 6 21 6 15V8z"/><path d="M11.5 16l3 3 6-6"/></svg></i><h4 class="display">Reducción de incidencias</h4><p>Minimización de errores, duplicidades y tiempos de espera.</p></article></div>
+          <p class="gw-close">El objetivo es que el asistente únicamente tenga que preocuparse de disfrutar del evento, mientras que la tecnología y el equipo de producción garantizan una gestión fluida, segura y coordinada de sus pertenencias.</p>
+        </div>
+      </div>
+
       <div class="container iv-block iv-renders">
-        <div class="iv-bh"><span class="label">03 · Renders y fotomontajes</span></div>
+        <div class="iv-bh"><span class="label">04 · Renders y fotomontajes</span></div>
         <div class="rd-fm">
           <div class="fm-row">
             <figure class="rd-ph" style="--ar: 1.7768"><div class="photo" data-ink="012c47" data-paper="cbdcee" data-cell="3"><img src="img/madnum-fm-acceso.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje del acceso exterior de Madnum con tótem de bienvenida y tótem de señalética del Leadership Meeting 2026"></div><figcaption class="label">Fotomontaje · Acceso exterior</figcaption></figure>
@@ -1697,7 +1781,7 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
                 </div>
       </div>
       <div class="container iv-block iv-lucky">
-        <div class="iv-bh"><span class="label">04 · Activación en el coffee break</span></div>
+        <div class="iv-bh"><span class="label">05 · Activación en el coffee break</span></div>
         <div class="bgrid acg acg-lk" data-xgrid>
           <div class="bc acg-lead"><p class="label">22 de diciembre · Lotería de Navidad</p><h3 class="lk-t display">The Lucky Number</h3><p class="acr-lead">La Lotería de Navidad es una de las tradiciones más arraigadas en España. Como el encuentro se celebra el mismo día del sorteo, el 22 de diciembre, proponemos compartir esta costumbre con los asistentes internacionales mediante un sorteo propio de Gestamp durante el coffee break.</p></div>
           <figure class="bc acg-ph lk-ph"><div class="acg-stick"><div class="lk-shot"><img data-shot src="img/lucky-qr.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con dos pantallas: QR «Scan &amp; play» y número de la suerte 28624" data-k="0" class="is-on"><img data-shot src="img/lucky-cuenta.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con la cuenta atrás del sorteo y el aviso para tener el número preparado" data-k="1"><img data-shot src="img/lucky-ganador.webp" width="1672" height="941" decoding="async" loading="lazy" alt="Fotomontaje de la sala de Madnum con el número ganador 28624 en las dos pantallas" data-k="2"><div class="lk-wipe" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><figcaption class="label lk-cap"><span data-shot data-k="0" class="is-on">Fotomontaje · Escanea y recibe tu número</span><span data-shot data-k="1">Fotomontaje · Cuenta atrás del sorteo</span><span data-shot data-k="2">Fotomontaje · Número ganador</span></figcaption></div></figure>
@@ -3217,7 +3301,7 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
       cap.textContent = fc ? (fon || fc).textContent.replace(/\s+/g, " ").trim() : "";
       from = el; box.showModal(); if (lenis) lenis.stop();
     }
-    $$(".photo, .idg-kv img, .idg-v img, .a4-pair img, .rd-fm .plan, .acg-shot img, .lk-shot img, .lk-mini img, .acg-badge img").forEach(function (el) {
+    $$(".photo, .idg-kv img, .idg-v img, .a4-pair img, .rd-fm .plan, .acg-shot img, .lk-shot img, .lk-mini img, .acg-badge img, .gw-zoom").forEach(function (el) {
       if (el.closest(".hero")) return;
       var i = el.tagName === "IMG" ? el : $("img", el);
       el.classList.add("zoomable");
@@ -3526,6 +3610,18 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
       gsap.from(marks, { rotate: 90, scale: 0, duration: .9, ease: EASE.out, stagger: { each: .025, from: "start" } });
     } });
     cells.forEach(function (c, i) { if (c.tagName === "FIGURE" || c.classList.contains("bc-ph") || c.classList.contains("pending")) return; scrub(c, "top 98%", "clamp(top 72%)").from(c.children, { y: 40, opacity: 0, stagger: .08, ease: "none" }); });
+  });
+
+  /* guardarropa: el mockup de la acreditación entra entero y se acerca hasta el número con el scroll */
+  $$(".gw-zoom img").forEach(function (im) {
+    if (!motion) return;
+    scrub(im.parentNode, "top 95%", "clamp(center 60%)").fromTo(im, { "--z": 0 }, { "--z": 1, ease: "power1.inOut" });
+  });
+  /* guardarropa: la línea del número se tiende y los tres puntos aparecen en orden */
+  $$(".gw-route").forEach(function (r) {
+    if (!motion) return;
+    var t = scrub(r, "top 95%", "clamp(top 65%)");
+    t.from($(".gw-num", r), { x: -40, opacity: 0, ease: "none" }).from($(".gw-line", r), { scaleX: 0, ease: "none" }, 0).from($$(".gw-mk", r), { opacity: 0, y: 14, stagger: .25, ease: "none" }, .2);
   });
 
   /* Barras de sección: el filete se tiende y las etiquetas entran */
@@ -3838,7 +3934,7 @@ html.hide-pending .iv-renders:not(:has(.rd-ph)) { display: none; }
       tsteps.forEach(function (b, k) { b.classList.toggle("is-on", k === i); });
       legs.forEach(function (l, k) {
         var ch = Array.prototype.slice.call(l.children);
-        if (k === i) { l.classList.add("is-on"); gsap.fromTo(ch, { y: 48, opacity: 0 }, { y: 0, opacity: 1, duration: .8, ease: EASE.out, stagger: .055, delay: prev < 0 ? 0 : .22, overwrite: true }); drawIcons(l); }
+        if (k === i) { l.classList.add("is-on"); gsap.fromTo(ch, { y: 48, yPercent: 0, opacity: 0 }, { y: 0, yPercent: 0, opacity: 1, duration: .8, ease: EASE.out, stagger: .055, delay: prev < 0 ? 0 : .22, overwrite: true });   /* yPercent a 0: ninguna cabecera conserva un desplazamiento previo */ drawIcons(l); }
         else if (k === prev) gsap.to(ch, { y: -28, opacity: 0, duration: .32, ease: EASE.in, stagger: .015, overwrite: true, onComplete: function () { if (curLeg !== k) l.classList.remove("is-on"); } });
         else { l.classList.remove("is-on"); gsap.set(ch, { clearProps: "opacity,transform" }); }
       });
